@@ -23,7 +23,8 @@ LM_STUDIO_API_KEY = os.environ.get('LM_STUDIO_API_KEY', "lm-studio")
 
 # Nom du modèle chargé dans LM Studio
 # Mistral 7B Instruct v0.2 - Excellent en français, rapide sur RTX 3060
-MODEL_NAME = os.environ.get('MODEL_NAME', "mistralai/Mistral-7B-Instruct-v0.2-GGUF")
+# Note: LM Studio utilise le modèle actuellement chargé, ce nom est indicatif
+MODEL_NAME = os.environ.get('MODEL_NAME', "local-model")
 
 # Température de génération (0.0 = déterministe, 1.0 = créatif)
 TEMPERATURE = float(os.environ.get('TEMPERATURE', '0.8'))
