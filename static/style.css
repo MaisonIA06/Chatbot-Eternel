@@ -1,0 +1,619 @@
+/* ============================================================
+   CHATBOT ETERNEL - MIA La Maison de l'IA
+   Design System avec Dark Theme Moderne
+   ============================================================ */
+
+/* -------- Variables CSS - Palette MIA -------- */
+:root {
+    /* Couleurs principales extraites du logo */
+    --mia-navy: #1a3a5c;
+    --mia-navy-light: #2a5a8c;
+    --mia-terracotta: #b5605a;
+    --mia-terracotta-light: #d4847e;
+    --mia-terracotta-dark: #8a4a45;
+    
+    /* Fond sombre - tons adaptés au background MIA */
+    --bg-dark: #162a42;
+    --bg-dark-lighter: #1e3a54;
+    --bg-card: rgba(20, 45, 75, 0.75);
+    --bg-card-hover: rgba(30, 60, 95, 0.85);
+    --bg-chat: rgba(15, 35, 60, 0.8);
+    
+    /* Textes */
+    --text-primary: #f0f4f8;
+    --text-secondary: #b8c8d8;
+    --text-muted: #7a95b0;
+    
+    /* Accents et états */
+    --accent-glow: rgba(181, 96, 90, 0.5);
+    --border-subtle: rgba(255, 255, 255, 0.12);
+    --border-active: rgba(181, 96, 90, 0.7);
+    
+    /* Ombres */
+    --shadow-card: 0 8px 32px rgba(0, 0, 0, 0.3);
+    --shadow-glow: 0 0 40px rgba(181, 96, 90, 0.25);
+    
+    /* Transitions */
+    --transition-fast: 0.2s ease;
+    --transition-smooth: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* -------- Reset et Base -------- */
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Plus Jakarta Sans', 'Montserrat', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--bg-dark);
+    background-image: url('MIA_Assets13.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    color: var(--text-primary);
+    overflow-x: hidden;
+}
+
+/* -------- Layout Principal -------- */
+.layout {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+/* -------- Titres -------- */
+h1, h3, h4 {
+    text-align: center;
+    margin: 0;
+    font-weight: 600;
+}
+
+#title {
+    font-size: 2.2rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, var(--text-primary) 0%, var(--mia-terracotta-light) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    letter-spacing: -0.5px;
+    margin-bottom: 8px;
+}
+
+#subtitle {
+    font-family: 'Plus Jakarta Sans', 'Montserrat', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 400;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+    font-style: italic;
+}
+
+#initial-roles {
+    font-family: 'Plus Jakarta Sans', 'Montserrat', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+    margin-bottom: 20px;
+}
+
+#initial-roles strong {
+    color: var(--mia-terracotta-light);
+    font-weight: 600;
+}
+
+/* -------- Container Principal du Chat -------- */
+.chat-container {
+    width: 90%;
+    max-width: 900px;
+    margin: 0 auto 20px;
+    padding: 28px;
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    box-shadow: var(--shadow-card);
+    border-radius: 20px;
+    position: relative;
+    z-index: 1;
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+}
+
+/* -------- Logo -------- */
+.logo {
+    position: absolute;
+    top: 20px;
+    right: 24px;
+    height: 70px;
+    opacity: 0.95;
+    transition: var(--transition-smooth);
+    filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.3));
+}
+
+.logo:hover {
+    opacity: 1;
+    transform: scale(1.05);
+}
+
+/* -------- Zone de Chat -------- */
+#chatbox {
+    height: 600px;
+    overflow-y: auto;
+    border: 1px solid var(--border-subtle);
+    padding: 20px;
+    margin-bottom: 10px;
+    border-radius: 16px;
+    background: var(--bg-chat);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    scroll-behavior: smooth;
+}
+
+/* Scrollbar personnalisée */
+#chatbox::-webkit-scrollbar {
+    width: 8px;
+}
+
+#chatbox::-webkit-scrollbar-track {
+    background: var(--bg-dark);
+    border-radius: 4px;
+}
+
+#chatbox::-webkit-scrollbar-thumb {
+    background: var(--mia-navy);
+    border-radius: 4px;
+}
+
+#chatbox::-webkit-scrollbar-thumb:hover {
+    background: var(--mia-navy-light);
+}
+
+/* -------- Messages -------- */
+#messages {
+    font-family: 'Lato', 'Plus Jakarta Sans', sans-serif;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.message {
+    padding: 16px 20px;
+    border-radius: 18px;
+    max-width: 75%;
+    line-height: 1.6;
+    font-size: 0.95rem;
+    animation: messageSlide 0.4s ease-out;
+    position: relative;
+    word-wrap: break-word;
+}
+
+@keyframes messageSlide {
+    from {
+        opacity: 0;
+        transform: translateY(15px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.message strong {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Message Personnage 1 (gauche - bleu clair) */
+.role1-response {
+    background: linear-gradient(135deg, rgba(40, 80, 130, 0.9) 0%, rgba(60, 110, 170, 0.9) 100%);
+    align-self: flex-start;
+    border-bottom-left-radius: 6px;
+    box-shadow: 0 4px 20px rgba(40, 80, 130, 0.4);
+    border: 1px solid rgba(100, 150, 200, 0.2);
+}
+
+.role1-response strong {
+    color: rgba(180, 210, 240, 0.9);
+}
+
+/* Message Personnage 2 (droite - terracotta) */
+.role2-response {
+    background: linear-gradient(135deg, var(--mia-terracotta-dark) 0%, var(--mia-terracotta) 100%);
+    align-self: flex-end;
+    border-bottom-right-radius: 6px;
+    box-shadow: 0 4px 20px rgba(181, 96, 90, 0.4);
+    border: 1px solid rgba(220, 140, 130, 0.2);
+}
+
+.role2-response strong {
+    color: rgba(255, 220, 210, 0.9);
+}
+
+/* Message système (centre) */
+.center-response {
+    background: rgba(30, 60, 95, 0.8);
+    border: 1px solid var(--border-subtle);
+    align-self: center;
+    text-align: center;
+    color: var(--text-secondary);
+    font-style: italic;
+}
+
+/* Indicateur de chargement */
+.typing-indicator {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 16px 20px;
+    background: rgba(35, 65, 105, 0.8);
+    border-radius: 18px;
+    align-self: center;
+    color: var(--text-secondary);
+    border: 1px solid var(--border-subtle);
+}
+
+.typing-indicator span {
+    font-size: 0.9rem;
+    font-style: italic;
+}
+
+.typing-dots {
+    display: flex;
+    gap: 4px;
+}
+
+.typing-dots span {
+    width: 8px;
+    height: 8px;
+    background: var(--mia-terracotta);
+    border-radius: 50%;
+    animation: typingBounce 1.4s infinite ease-in-out;
+}
+
+.typing-dots span:nth-child(1) { animation-delay: 0s; }
+.typing-dots span:nth-child(2) { animation-delay: 0.2s; }
+.typing-dots span:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes typingBounce {
+    0%, 80%, 100% {
+        transform: scale(0.6);
+        opacity: 0.5;
+    }
+    40% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/* -------- Panneaux Latéraux -------- */
+.left-panel,
+.right-panel {
+    position: fixed;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    width: 280px;
+    padding: 20px;
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: 20px;
+    box-shadow: var(--shadow-card);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    z-index: 10;
+}
+
+.left-panel {
+    left: 20px;
+}
+
+.right-panel {
+    right: 20px;
+}
+
+.left-panel h4,
+.right-panel h4 {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+    font-weight: 600;
+}
+
+/* -------- Grille de Personnages -------- */
+.character-columns {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 16px;
+    flex-wrap: nowrap;
+}
+
+.character-column {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+/* -------- Carte Personnage -------- */
+.image-row {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    padding: 10px;
+    border-radius: 14px;
+    transition: var(--transition-smooth);
+    border: 2px solid transparent;
+    background: rgba(25, 50, 80, 0.6);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+}
+
+.image-row:hover {
+    background: rgba(40, 75, 115, 0.8);
+    border-color: var(--border-active);
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-glow);
+}
+
+.image-row:focus {
+    outline: none;
+    border-color: var(--mia-terracotta);
+    box-shadow: 0 0 0 3px var(--accent-glow);
+}
+
+.image-row.selected {
+    border-color: var(--mia-terracotta);
+    background: rgba(45, 80, 120, 0.85);
+    box-shadow: var(--shadow-glow);
+}
+
+.image-row p {
+    margin: 0;
+    padding: 0;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    text-align: center;
+    transition: var(--transition-fast);
+}
+
+.image-row:hover p {
+    color: var(--text-primary);
+}
+
+.image-row img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 12px;
+    transition: var(--transition-smooth);
+    border: 2px solid var(--border-subtle);
+}
+
+.image-row:hover img {
+    transform: scale(1.08);
+    border-color: var(--mia-terracotta);
+}
+
+/* -------- Disclaimer -------- */
+.disclaimer {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    text-align: center;
+    margin: 10px auto;
+    max-width: 700px;
+    line-height: 1.5;
+    padding: 14px 20px;
+    background: rgba(20, 45, 75, 0.7);
+    border-radius: 12px;
+    border: 1px solid var(--border-subtle);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+}
+
+.disclaimer strong {
+    color: var(--mia-terracotta-light);
+}
+
+/* -------- Responsive - Grands Écrans -------- */
+@media (min-width: 1800px) {
+    .chat-container {
+        max-width: 1000px;
+    }
+    
+    #chatbox {
+        height: 700px;
+    }
+    
+    .image-row img {
+        width: 110px;
+        height: 110px;
+    }
+    
+    .left-panel,
+    .right-panel {
+        width: 300px;
+    }
+}
+
+/* -------- Responsive - Écrans Moyens -------- */
+@media (max-width: 1500px) {
+    .left-panel,
+    .right-panel {
+        width: 240px;
+        padding: 16px;
+    }
+    
+    .image-row img {
+        width: 75px;
+        height: 75px;
+    }
+    
+    .image-row {
+        padding: 8px;
+    }
+    
+    .character-column {
+        gap: 12px;
+    }
+}
+
+@media (max-width: 1300px) {
+    .left-panel,
+    .right-panel {
+        width: 200px;
+        padding: 14px;
+    }
+    
+    .image-row img {
+        width: 65px;
+        height: 65px;
+    }
+    
+    .image-row p {
+        font-size: 0.7rem;
+    }
+    
+    .chat-container {
+        width: 55%;
+    }
+}
+
+/* -------- Responsive - Tablettes -------- */
+@media (max-width: 1100px) {
+    .left-panel,
+    .right-panel {
+        position: relative;
+        top: auto;
+        left: auto;
+        right: auto;
+        transform: none;
+        width: 100%;
+        max-width: 600px;
+        margin: 20px auto;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    
+    .left-panel h4,
+    .right-panel h4 {
+        width: 100%;
+    }
+    
+    .character-columns {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    
+    .character-column {
+        flex-direction: row;
+        gap: 12px;
+    }
+    
+    .chat-container {
+        width: 95%;
+        order: -1;
+    }
+    
+    .layout {
+        flex-wrap: wrap;
+    }
+    
+    #chatbox {
+        height: 500px;
+    }
+}
+
+/* -------- Responsive - Mobile -------- */
+@media (max-width: 768px) {
+    .layout {
+        padding: 10px;
+    }
+    
+    .chat-container {
+        padding: 16px;
+        border-radius: 16px;
+    }
+    
+    #title {
+        font-size: 1.6rem;
+    }
+    
+    #initial-roles {
+        font-size: 0.95rem;
+    }
+    
+    .logo {
+        height: 50px;
+        top: 12px;
+        right: 12px;
+    }
+    
+    #chatbox {
+        height: 400px;
+        padding: 14px;
+    }
+    
+    .message {
+        max-width: 85%;
+        padding: 12px 16px;
+        font-size: 0.9rem;
+    }
+    
+    .image-row img {
+        width: 55px;
+        height: 55px;
+    }
+    
+    .image-row p {
+        font-size: 0.65rem;
+    }
+    
+    .left-panel,
+    .right-panel {
+        padding: 12px;
+        border-radius: 14px;
+    }
+}
+
+/* -------- Animations d'entrée -------- */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.chat-container {
+    animation: fadeInUp 0.6s ease-out;
+}
+
+.left-panel {
+    animation: fadeInUp 0.6s ease-out 0.2s backwards;
+}
+
+.right-panel {
+    animation: fadeInUp 0.6s ease-out 0.3s backwards;
+}
+
+.disclaimer {
+    animation: fadeInUp 0.6s ease-out 0.4s backwards;
+}

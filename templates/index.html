@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbot Éternel - MIA La Maison de l'IA</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='logo_mia.png') }}">
+</head>
+
+<body>
+    <div class="layout">
+        <!-- Panel Gauche - Pionnières de la médecine -->
+        <div class="left-panel">
+            <h4>Pionnières</h4>
+            <div class="character-columns">
+                <div class="character-column">
+                    <div class="image-row" role="button" tabindex="0" data-name="Hildegarde de Bingen" data-column="1">
+                        <img src="{{ url_for('static', filename='Hildegarde de Bingen.webp') }}" alt="Hildegarde de Bingen">
+                        <p>Hildegarde</p>
+                    </div>
+                    <div class="image-row" role="button" tabindex="0" data-name="Florence Nightingale" data-column="1">
+                        <img src="{{ url_for('static', filename='Florence_Nightingale.jpg') }}" alt="Florence Nightingale">
+                        <p>Nightingale</p>
+                    </div>
+                </div>
+                <div class="character-column">
+                    <div class="image-row" role="button" tabindex="0" data-name="Marie Curie" data-column="1">
+                        <img src="{{ url_for('static', filename='marie_curie.png') }}" alt="Marie Curie">
+                        <p>Marie Curie</p>
+                    </div>
+                    <div class="image-row" role="button" tabindex="0" data-name="Rosalind Franklin" data-column="1">
+                        <img src="{{ url_for('static', filename='Rosalind Franklin.webp') }}" alt="Rosalind Franklin">
+                        <p>R. Franklin</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Container Principal du Chat -->
+        <div class="chat-container">
+            <img src="{{ url_for('static', filename='logo_mia.png') }}" alt="MIA - La Maison de l'IA" class="logo">
+            <h1 id="title">Chatbot Éternel</h1>
+            <h3 id="subtitle">Dialogues entre grandes figures de la médecine</h3>
+            <h3 id="initial-roles"></h3>
+            <div id="chatbox">
+                <div id="messages"></div>
+            </div>
+        </div>
+
+        <!-- Panel Droit - Pères de la médecine -->
+        <div class="right-panel">
+            <h4>Pionniers</h4>
+            <div class="character-columns">
+                <div class="character-column">
+                    <div class="image-row" role="button" tabindex="0" data-name="Hippocrate" data-column="2">
+                        <img src="{{ url_for('static', filename='Hippocrate.jpeg') }}" alt="Hippocrate">
+                        <p>Hippocrate</p>
+                    </div>
+                    <div class="image-row" role="button" tabindex="0" data-name="Avicenne" data-column="2">
+                        <img src="{{ url_for('static', filename='avicenne.jpg') }}" alt="Avicenne">
+                        <p>Avicenne</p>
+                    </div>
+                </div>
+                <div class="character-column">
+                    <div class="image-row" role="button" tabindex="0" data-name="Louis Pasteur" data-column="2">
+                        <img src="{{ url_for('static', filename='Louis Pasteur.jpg') }}" alt="Louis Pasteur">
+                        <p>L. Pasteur</p>
+                    </div>
+                    <div class="image-row" role="button" tabindex="0" data-name="Alexander Fleming" data-column="2">
+                        <img src="{{ url_for('static', filename='Alexander Fleming.avif') }}" alt="Alexander Fleming">
+                        <p>A. Fleming</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Disclaimer -->
+        <div class="disclaimer">
+            <strong>Attention</strong> : Les dialogues générés par ce chatbot sont entièrement fictifs.
+            Les propos attribués aux personnages ne reflètent en aucun cas leurs opinions réelles, 
+            ni celles de La Maison de l'IA ou de ses agents.
+            Ce projet a un but exclusivement ludique et éducatif.
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        // ============================================================
+        // CHATBOT ETERNEL - JavaScript
+        // Thème : Grandes figures de la médecine
+        // ============================================================
+
+        // -------- CONFIGURATION --------
+        const MESSAGE_DELAY = 30000;
+        const SCROLL_TIMEOUT = 20000;
+
+        // -------- ÉTAT DE L'APPLICATION --------
+        let role1 = "{{ role1 }}";
+        let role2 = "{{ role2 }}";
+        let currentRole = role1;
+        let scrollTimeoutId = null;
+        let continueChatId = null;
+        let chatCleared = false;
+        let chatSession = 0;
+        let isWaitingForResponse = false;
+
+        // -------- INITIALISATION --------
+        document.addEventListener('DOMContentLoaded', function() {
+            updateRolesDisplay();
+            updateSelectedCharacters();
+            initCharacterClicks();
+            
+            chatSession++;
+            addMessage(currentRole, '');
+            continueChat('', chatSession);
+        });
+
+        // -------- GESTION DES PERSONNAGES --------
+        function initCharacterClicks() {
+            document.querySelectorAll('.image-row').forEach(row => {
+                row.addEventListener('click', function() {
+                    const name = this.dataset.name;
+                    const column = parseInt(this.dataset.column);
+                    handleImageClick(name, column);
+                });
+                
+                row.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        const name = this.dataset.name;
+                        const column = parseInt(this.dataset.column);
+                        handleImageClick(name, column);
+                    }
+                });
+            });
+        }
+
+        function handleImageClick(name, column) {
+            chatSession++;
+
+            if (continueChatId !== null) {
+                clearTimeout(continueChatId);
+                chatCleared = true;
+            }
+
+            if (column === 1) {
+                role1 = name;
+            } else {
+                role2 = name;
+            }
+
+            currentRole = role1;
+
+            $.post('/update_characters', { role1: role1, role2: role2 }, function(data) {
+                role1 = data.role1;
+                role2 = data.role2;
+                currentRole = role1;
+
+                updateRolesDisplay();
+                updateSelectedCharacters();
+
+                document.getElementById('messages').innerHTML = '';
+                addMessage(currentRole, '');
+                continueChat('', chatSession);
+                chatCleared = false;
+            });
+        }
+
+        function updateRolesDisplay() {
+            document.getElementById('initial-roles').innerHTML = 
+                '<strong>' + role1 + '</strong> <span style="color: var(--text-muted)">dialogue avec</span> <strong>' + role2 + '</strong>';
+        }
+
+        function updateSelectedCharacters() {
+            document.querySelectorAll('.image-row').forEach(row => {
+                row.classList.remove('selected');
+            });
+            
+            document.querySelectorAll('.image-row').forEach(row => {
+                if (row.dataset.name === role1 || row.dataset.name === role2) {
+                    row.classList.add('selected');
+                }
+            });
+        }
+
+        // -------- GESTION DES MESSAGES --------
+        function addMessage(role, message) {
+            const chatbox = document.getElementById('chatbox');
+            const messagesContainer = document.getElementById('messages');
+            const isAtBottom = Math.abs(chatbox.scrollTop + chatbox.clientHeight - chatbox.scrollHeight) < 10;
+
+            removeTypingIndicator();
+
+            if (message === '') {
+                messagesContainer.innerHTML += 
+                    '<div class="message center-response init-message">' +
+                    '<span>Initialisation de la conversation médicale...</span>' +
+                    '</div>';
+            } else {
+                const initMsg = document.querySelector('.init-message');
+                if (initMsg) initMsg.remove();
+
+                const cssClass = (role === role1) ? 'role1-response' : 'role2-response';
+                
+                messagesContainer.innerHTML += 
+                    '<div class="message ' + cssClass + '">' +
+                    '<strong>' + role + '</strong>' +
+                    '<span>' + escapeHtml(message) + '</span>' +
+                    '</div>';
+            }
+
+            if (isAtBottom) {
+                scrollToBottom();
+            }
+        }
+
+        function addTypingIndicator() {
+            const messagesContainer = document.getElementById('messages');
+            
+            if (document.querySelector('.typing-indicator')) return;
+            
+            messagesContainer.innerHTML += 
+                '<div class="typing-indicator">' +
+                '<span>Réflexion en cours</span>' +
+                '<div class="typing-dots">' +
+                '<span></span><span></span><span></span>' +
+                '</div>' +
+                '</div>';
+            
+            scrollToBottom();
+        }
+
+        function removeTypingIndicator() {
+            const indicator = document.querySelector('.typing-indicator');
+            if (indicator) indicator.remove();
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        // -------- GESTION DU SCROLL --------
+        function scrollToBottom() {
+            const chatbox = document.getElementById('chatbox');
+            chatbox.scrollTop = chatbox.scrollHeight;
+        }
+
+        function scrollTimeout() {
+            clearTimeout(scrollTimeoutId);
+            scrollTimeoutId = setTimeout(() => {
+                scrollToBottom();
+            }, SCROLL_TIMEOUT);
+        }
+
+        document.getElementById('chatbox').addEventListener('scroll', scrollTimeout);
+        document.getElementById('chatbox').addEventListener('scrollend', scrollTimeout);
+
+        // -------- BOUCLE DE CONVERSATION --------
+        function continueChat(lastMessage, sessionId) {
+            continueChatId = setTimeout(function() {
+                if (sessionId !== chatSession) {
+                    console.log('Session changée, arrêt de la boucle précédente.');
+                    return;
+                }
+
+                addTypingIndicator();
+                isWaitingForResponse = true;
+
+                $.post('/get_response', { message: lastMessage, role: currentRole })
+                    .done(function(data) {
+                        if (!chatCleared && sessionId === chatSession) {
+                            isWaitingForResponse = false;
+                            addMessage(data.role, data.response);
+                            currentRole = data.role;
+                            continueChat(data.response, sessionId);
+                        }
+                    })
+                    .fail(function() {
+                        isWaitingForResponse = false;
+                        removeTypingIndicator();
+                        addMessage('Système', 'Erreur de connexion avec le serveur. Vérifiez que LM Studio est en cours d\'exécution.');
+                    });
+            }, MESSAGE_DELAY);
+        }
+    </script>
+</body>
+
+</html>

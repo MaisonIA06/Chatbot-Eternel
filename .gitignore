@@ -1,0 +1,102 @@
+# ============================================================
+# Chatbot Éternel - MIA La Maison de l'IA
+# Fichier .gitignore
+# ============================================================
+
+# -------- Environnements virtuels Python --------
+venv/
+venv_windows/
+.venv/
+env/
+.env/
+ENV/
+
+# -------- Python --------
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# -------- Fichiers de configuration locaux --------
+.env
+.env.local
+*.local
+config.local.py
+
+# -------- IDE et éditeurs --------
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.project
+.pydevproject
+.settings/
+*.sublime-project
+*.sublime-workspace
+
+# -------- Système d'exploitation --------
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
+
+# -------- Logs et fichiers temporaires --------
+*.log
+*.tmp
+*.temp
+*.bak
+*.cache
+.cache/
+
+# -------- Flask --------
+instance/
+.webassets-cache
+
+# -------- Sessions Flask --------
+flask_session/
+
+# -------- Jupyter Notebooks --------
+.ipynb_checkpoints/
+
+# -------- Tests --------
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+.nox/
+
+# -------- Documentation générée --------
+docs/_build/
+site/
+
+# -------- Fichiers de sauvegarde --------
+*.bak
+*.backup
+*~
+
+# -------- Archives --------
+*.zip
+*.tar.gz
+*.rar
+*.7z
