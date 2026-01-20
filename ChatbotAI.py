@@ -157,15 +157,21 @@ def generate_response(message, consigne, speaker_role):
     print(f"🎭 Personnage: {speaker_role}")
     print(f"📝 Historique: {len(conversation_history)} messages")
     
-    # Construire les messages avec l'historique
-    messages = [{"role": "system", "content": build_system_prompt(consigne)}]
+    # Construire les messages (sans rôle "system" car non supporté par certains modèles)
+    messages = []
     
     # Ajouter l'historique (limité aux N derniers messages)
     messages.extend(conversation_history[-MAX_HISTORY_LENGTH:])
     
-    # Ajouter le nouveau message de l'interlocuteur
+    # Construire le message utilisateur avec les instructions du personnage intégrées
+    system_instructions = build_system_prompt(consigne)
     if message:
-        messages.append({"role": "user", "content": message})
+        # Intégrer les instructions dans le message utilisateur
+        full_message = f"[Instructions: {system_instructions}]\n\nMessage de ton interlocuteur: {message}"
+        messages.append({"role": "user", "content": full_message})
+    else:
+        # Premier message - juste les instructions pour démarrer
+        messages.append({"role": "user", "content": f"[Instructions: {system_instructions}]\n\nCommence la conversation en te présentant brièvement."})
     
     try:
         completion = client.chat.completions.create(
