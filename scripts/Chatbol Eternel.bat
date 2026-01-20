@@ -28,8 +28,8 @@ REM Configuration du modèle
 REM Mistral 7B Instruct v0.2 - Excellent en français, rapide
 REM Nécessite environ 6-8 Go de VRAM (GPU)
 REM ============================================================
-set "MODEL_NAME=mistralai/Mistral-7B-Instruct-v0.2-GGUF"
-set "MODEL_SEARCH=mistral-7b"
+set "MODEL_NAME=mistral-7b-instruct-v0.2"
+set "MODEL_SEARCH=mistral"
 
 REM ============================================================
 REM 1. Démarrer le serveur LM Studio

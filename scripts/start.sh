@@ -9,7 +9,7 @@ set -e
 # Configuration - Modèle à charger dans LM Studio
 # Mistral 7B Instruct v0.2 - Excellent en français, rapide
 # Nécessite environ 6-8 Go de VRAM (GPU)
-MODEL="mistralai/Mistral-7B-Instruct-v0.2-GGUF"
+MODEL="mistral-7b-instruct-v0.2"
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PROJECT_DIR="$(dirname "$SCRIPT_DIR")"
 VENV_DIR="$PROJECT_DIR/venv"
