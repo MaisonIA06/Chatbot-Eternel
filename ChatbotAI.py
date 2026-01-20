@@ -22,8 +22,8 @@ LM_STUDIO_URL = os.environ.get('LM_STUDIO_URL', "http://localhost:1234/v1")
 LM_STUDIO_API_KEY = os.environ.get('LM_STUDIO_API_KEY', "lm-studio")
 
 # Nom du modèle chargé dans LM Studio
-# Ministral 3 14B - Modèle Mistral AI, excellent en français
-MODEL_NAME = os.environ.get('MODEL_NAME', "mistralai/ministral-3-14b")
+# Mistral 7B Instruct v0.2 - Excellent en français, rapide sur RTX 3060
+MODEL_NAME = os.environ.get('MODEL_NAME', "mistralai/Mistral-7B-Instruct-v0.2-GGUF")
 
 # Température de génération (0.0 = déterministe, 1.0 = créatif)
 TEMPERATURE = float(os.environ.get('TEMPERATURE', '0.8'))

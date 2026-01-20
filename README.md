@@ -73,13 +73,13 @@ Un chatbot interactif qui simule des conversations entre personnages historiques
 ### Modèle IA recommandé
 
 ```
-mistralai/ministral-3-14b
+Mistral-7B-Instruct-v0.2-GGUF
 ```
 
 | Configuration | RAM/VRAM requise |
 |---------------|------------------|
-| GPU (recommandé) | ~10-12 Go VRAM |
-| CPU only | ~16+ Go RAM |
+| GPU (recommandé) | ~6-8 Go VRAM |
+| CPU only | ~10-12 Go RAM |
 
 ---
 
@@ -100,7 +100,17 @@ mistralai/ministral-3-14b
 3. Rechercher **"ministral"**
 4. Télécharger `ministral-3-14b` (version Q4_K_M recommandée)
 
-### Étape 3 : Installer le projet
+### Étape 3 : Autoriser les scripts PowerShell (si nécessaire)
+
+Si vous utilisez PowerShell, ouvrez-le **en tant qu'administrateur** et exécutez :
+
+```powershell
+Set-ExecutionPolicy -Scope CurrentUser RemoteSigned
+```
+
+Répondez **"O"** (Oui) à la question.
+
+### Étape 4 : Installer le projet
 
 ```batch
 # Double-cliquer sur :

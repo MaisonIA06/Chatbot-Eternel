@@ -25,11 +25,11 @@ echo.
 
 REM ============================================================
 REM Configuration du modèle
-REM Ministral 3 14B - Modèle Mistral AI, excellent en français
-REM Nécessite environ 10-12 Go de VRAM (GPU) ou 16+ Go RAM (CPU)
+REM Mistral 7B Instruct v0.2 - Excellent en français, rapide
+REM Nécessite environ 6-8 Go de VRAM (GPU)
 REM ============================================================
-set "MODEL_NAME=mistralai/ministral-3-14b"
-set "MODEL_SEARCH=ministral"
+set "MODEL_NAME=mistralai/Mistral-7B-Instruct-v0.2-GGUF"
+set "MODEL_SEARCH=mistral-7b"
 
 REM ============================================================
 REM 1. Démarrer le serveur LM Studio

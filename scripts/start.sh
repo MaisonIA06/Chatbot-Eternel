@@ -7,9 +7,9 @@
 set -e
 
 # Configuration - Modèle à charger dans LM Studio
-# Ministral 3 14B - Modèle Mistral AI, excellent en français
-# Nécessite environ 10-12 Go de VRAM (GPU) ou 16+ Go RAM (CPU)
-MODEL="mistralai/ministral-3-14b"
+# Mistral 7B Instruct v0.2 - Excellent en français, rapide
+# Nécessite environ 6-8 Go de VRAM (GPU)
+MODEL="mistralai/Mistral-7B-Instruct-v0.2-GGUF"
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PROJECT_DIR="$(dirname "$SCRIPT_DIR")"
 VENV_DIR="$PROJECT_DIR/venv"
@@ -51,7 +51,7 @@ if command -v lms &> /dev/null; then
 
     # 4. Attendre que le modèle soit chargé
     echo "⏳ Attente du chargement du modèle..."
-    while ! lms ps | grep -qi "ministral"; do
+    while ! lms ps | grep -qi "mistral-7b"; do
         echo "   Chargement en cours..."
         sleep 2
     done
