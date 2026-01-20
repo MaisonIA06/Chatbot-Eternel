@@ -11,36 +11,36 @@ Un chatbot interactif qui simule des conversations entre personnages historiques
 
 ---
 
-## 📋 Table des matières
+## Table des matières
 
-- [Présentation](#-présentation)
-- [Personnages](#-personnages)
-- [Prérequis](#-prérequis)
-- [Installation Windows](#-installation-windows)
-- [Installation Linux](#-installation-linux)
-- [Utilisation](#-utilisation)
-- [Configuration](#-configuration)
-- [Architecture](#-architecture)
-- [Crédits](#-crédits)
+- [Présentation](#présentation)
+- [Personnages](#personnages)
+- [Prérequis](#prérequis)
+- [Installation Windows](#installation-windows)
+- [Installation Linux](#installation-linux)
+- [Utilisation](#utilisation)
+- [Configuration](#configuration)
+- [Architecture](#architecture)
+- [Crédits](#crédits)
 
 ---
 
-## 🎭 Présentation
+## Présentation
 
 **Chatbot Éternel** est une application web qui génère des dialogues fictifs et automatiques entre deux personnages historiques de la médecine. L'IA joue alternativement chaque rôle, créant des échanges fascinants sur la science, la médecine, la philosophie et la vie.
 
 ### Fonctionnalités
 
-- 🎭 **8 personnages historiques** avec des personnalités distinctes
-- 🤖 **IA locale** via LM Studio (pas de données envoyées sur internet)
-- 🔄 **Dialogues automatiques** qui s'enchaînent naturellement
-- 🎨 **Interface moderne** avec thème sombre élégant
-- 📱 **Design responsive** (desktop, tablette, mobile)
-- 🖥️ **Scripts automatisés** pour Windows et Linux
+- **8 personnages historiques** avec des personnalités distinctes
+- **IA locale** via LM Studio (pas de données envoyées sur internet)
+- **Dialogues automatiques** qui s'enchaînent naturellement
+- **Interface moderne** avec thème sombre élégant
+- **Design responsive** (desktop, tablette, mobile)
+- **Scripts automatisés** pour Windows et Linux
 
 ---
 
-## 👥 Personnages
+## Personnages
 
 ### Pionnières (Groupe 1)
 
@@ -62,7 +62,7 @@ Un chatbot interactif qui simule des conversations entre personnages historiques
 
 ---
 
-## 💻 Prérequis
+## Prérequis
 
 ### Logiciels requis
 
@@ -83,22 +83,22 @@ Mistral-7B-Instruct-v0.2-GGUF
 
 ---
 
-## 🪟 Installation Windows
+## Installation Windows
 
 ### Étape 1 : Installer les prérequis
 
 1. **Python** : [python.org/downloads](https://www.python.org/downloads/)
-   - ⚠️ Cocher **"Add Python to PATH"** lors de l'installation
+   - Cocher **"Add Python to PATH"** lors de l'installation
 
 2. **LM Studio** : [lmstudio.ai](https://lmstudio.ai/)
-   - Après installation, activer le CLI dans les paramètres
+   - Après installation, activer le CLI dans Settings > Developer
 
 ### Étape 2 : Télécharger le modèle
 
 1. Ouvrir LM Studio
 2. Aller dans "Discover" ou "Search"
-3. Rechercher **"ministral"**
-4. Télécharger `ministral-3-14b` (version Q4_K_M recommandée)
+3. Rechercher **"mistral 7b instruct"**
+4. Télécharger `Mistral-7B-Instruct-v0.2` (version Q4_K_M ou Q5_K_M recommandée)
 
 ### Étape 3 : Autoriser les scripts PowerShell (si nécessaire)
 
@@ -117,9 +117,9 @@ Répondez **"O"** (Oui) à la question.
 scripts\Installation Windows.bat
 ```
 
-Ce script crée automatiquement l'environnement virtuel et installe les dépendances.
+Ce script crée automatiquement l'environnement virtuel `venv_windows` et installe les dépendances.
 
-### Étape 4 : Lancer le chatbot
+### Étape 5 : Lancer le chatbot
 
 ```batch
 # Double-cliquer sur :
@@ -137,7 +137,7 @@ scripts\Stop Chatbot Eternel.bat
 
 ---
 
-## 🐧 Installation Linux
+## Installation Linux
 
 ### Étape 1 : Installer les prérequis
 
@@ -173,7 +173,7 @@ pip install -r requirements.txt
 
 ---
 
-## 🚀 Utilisation
+## Utilisation
 
 1. **Sélectionner les personnages** en cliquant sur leurs portraits dans les panneaux latéraux
 2. **Observer le dialogue** qui se génère automatiquement
@@ -187,17 +187,32 @@ pip install -r requirements.txt
 │                                                         │
 │  Hildegarde    ┌─────────────────────┐    Hippocrate    │
 │  Nightingale   │  Marie Curie:       │    Avicenne      │
-│  Marie Curie   │  "Bonjour Louis!" │    Pasteur       │
+│  Marie Curie   │  "Bonjour Louis!"   │    Pasteur       │
 │  Franklin      │                     │    Fleming       │
 │                │  Louis Pasteur:     │                  │
-│                │  "Chère Marie!"    │                  │
+│                │  "Chère Marie!"     │                  │
 │                └─────────────────────┘                  │
 └─────────────────────────────────────────────────────────┘
 ```
 
 ---
 
-## ⚙️ Configuration
+## Configuration
+
+### Paramètres principaux (ChatbotAI.py)
+
+| Paramètre | Valeur par défaut | Description |
+|-----------|-------------------|-------------|
+| `MODEL_NAME` | `mistral-7b-instruct-v0.2` | Modèle LM Studio |
+| `TEMPERATURE` | `0.2` | Créativité (0.0 = déterministe, 1.0 = créatif) |
+| `MAX_TOKENS` | `100` | Longueur max des réponses (~2-3 phrases) |
+| `MAX_HISTORY_LENGTH` | `10` | Mémoire de conversation |
+
+### Délai entre les messages (index.html)
+
+| Paramètre | Valeur par défaut | Description |
+|-----------|-------------------|-------------|
+| `MESSAGE_DELAY` | `5000` | 5 secondes entre chaque message |
 
 ### Variables d'environnement (optionnel)
 
@@ -206,10 +221,13 @@ pip install -r requirements.txt
 export LM_STUDIO_URL="http://localhost:1234/v1"
 
 # Nom du modèle
-export MODEL_NAME="mistralai/ministral-3-14b"
+export MODEL_NAME="mistral-7b-instruct-v0.2"
 
 # Température (0.0 = déterministe, 1.0 = créatif)
-export TEMPERATURE="0.8"
+export TEMPERATURE="0.2"
+
+# Longueur max des réponses
+export MAX_TOKENS="100"
 
 # Taille de l'historique de conversation
 export MAX_HISTORY_LENGTH="10"
@@ -218,28 +236,9 @@ export MAX_HISTORY_LENGTH="10"
 export FLASK_DEBUG="false"
 ```
 
-### Fichier `ChatbotAI.py`
-
-Les paramètres principaux sont en haut du fichier :
-
-```python
-LM_STUDIO_URL = "http://localhost:1234/v1"
-MODEL_NAME = "mistralai/ministral-3-14b"
-TEMPERATURE = 0.8
-MAX_HISTORY_LENGTH = 10
-```
-
-### Délai entre les messages
-
-Dans `templates/index.html` :
-
-```javascript
-const MESSAGE_DELAY = 30000;  // 30 secondes (ajuster selon la vitesse du modèle)
-```
-
 ---
 
-## 🏗️ Architecture
+## Architecture
 
 ```
 chatbot eternel/
@@ -252,10 +251,12 @@ chatbot eternel/
 │   └── index.html         # Interface web
 │
 ├── static/
-│   ├── style.css          # Styles CSS (dark theme)
+│   ├── style.css          # Styles CSS (dark theme MIA)
 │   ├── logo_mia.png       # Logo MIA
 │   ├── MIA_Assets13.jpg   # Image de fond
 │   └── *.png/jpg/webp     # Portraits des personnages
+│
+├── venv_windows/          # Environnement virtuel Windows (créé par le script)
 │
 └── scripts/
     ├── Installation Windows.bat   # Installation Windows
@@ -272,11 +273,11 @@ chatbot eternel/
 | Backend | Python 3 + Flask |
 | Frontend | HTML5 + CSS3 + JavaScript |
 | IA | LM Studio (API compatible OpenAI) |
-| Modèle | Ministral 3 14B (Mistral AI) |
+| Modèle | Mistral 7B Instruct v0.2 (Mistral AI) |
 
 ---
 
-## ⚠️ Avertissement
+## Avertissement
 
 > **Les dialogues générés par ce chatbot sont entièrement fictifs.**
 > Les propos attribués aux personnages ne reflètent en aucun cas leurs opinions réelles, ni celles de La Maison de l'IA ou de ses agents.
@@ -284,7 +285,7 @@ chatbot eternel/
 
 ---
 
-## 📜 Crédits
+## Crédits
 
 ### Développement
 
@@ -302,7 +303,7 @@ Les portraits et informations biographiques sont utilisés à des fins éducativ
 
 ---
 
-## 📄 Licence
+## Licence
 
 Ce projet est propriétaire. Tous droits réservés © MIA - La Maison de l'IA 2025.
 
