@@ -26,7 +26,7 @@ LM_STUDIO_API_KEY = os.environ.get('LM_STUDIO_API_KEY', "lm-studio")
 MODEL_NAME = os.environ.get('MODEL_NAME', "mistral-7b-instruct-v0.2")
 
 # Température de génération (0.0 = déterministe, 1.0 = créatif)
-TEMPERATURE = float(os.environ.get('TEMPERATURE', '0.8'))
+TEMPERATURE = float(os.environ.get('TEMPERATURE', '0.2'))
 
 # Nombre maximum de tokens par réponse (limite la longueur des messages)
 MAX_TOKENS = int(os.environ.get('MAX_TOKENS', '100'))
