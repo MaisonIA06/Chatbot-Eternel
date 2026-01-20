@@ -28,6 +28,9 @@ MODEL_NAME = os.environ.get('MODEL_NAME', "mistral-7b-instruct-v0.2")
 # Température de génération (0.0 = déterministe, 1.0 = créatif)
 TEMPERATURE = float(os.environ.get('TEMPERATURE', '0.8'))
 
+# Nombre maximum de tokens par réponse (limite la longueur des messages)
+MAX_TOKENS = int(os.environ.get('MAX_TOKENS', '100'))
+
 # Nombre maximum de messages dans l'historique (pour limiter les tokens)
 MAX_HISTORY_LENGTH = int(os.environ.get('MAX_HISTORY_LENGTH', '10'))
 
@@ -178,6 +181,7 @@ def generate_response(message, consigne, speaker_role):
             model=MODEL_NAME,
             messages=messages,
             temperature=TEMPERATURE,
+            max_tokens=MAX_TOKENS,
         )
         response = completion.choices[0].message.content
         
@@ -288,6 +292,7 @@ if __name__ == "__main__":
     print(f"\n📊 Configuration:")
     print(f"   • Modèle: {MODEL_NAME}")
     print(f"   • Température: {TEMPERATURE}")
+    print(f"   • Max tokens: {MAX_TOKENS}")
     print(f"   • Historique max: {MAX_HISTORY_LENGTH} messages")
     print(f"   • Mode debug: {DEBUG_MODE}")
     print(f"\n👥 Personnages disponibles:")
