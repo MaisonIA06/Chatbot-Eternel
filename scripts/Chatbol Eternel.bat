@@ -65,59 +65,23 @@ echo [OK]  Modèle chargé!
 echo.
 
 REM ============================================================
-REM 3. Trouver Python (venv, Anaconda, ou système)
+REM 3. Trouver Python (venv_windows prioritaire)
 REM ============================================================
 echo [3/5] Recherche de Python...
 
-REM Essayer le venv Windows d'abord (créé par Installation Windows.bat)
+REM Vérifier si venv_windows existe (créé par Installation Windows.bat)
 if exist "%PROJECT_DIR%\venv_windows\Scripts\python.exe" (
     set "PYTHON_PATH=%PROJECT_DIR%\venv_windows\Scripts\python.exe"
-    echo [OK]  Python trouvé dans venv_windows
+    echo [OK]  Python trouve dans venv_windows
     goto python_found
 )
 
-REM Essayer le venv générique
-if exist "%PROJECT_DIR%\venv\Scripts\python.exe" (
-    set "PYTHON_PATH=%PROJECT_DIR%\venv\Scripts\python.exe"
-    echo [OK]  Python trouvé dans venv local
-    goto python_found
-)
-
-REM Essayer Anaconda (chemins courants)
-if exist "C:\ProgramData\anaconda3\python.exe" (
-    set "PYTHON_PATH=C:\ProgramData\anaconda3\python.exe"
-    echo [OK]  Python trouvé dans Anaconda (ProgramData)
-    goto python_found
-)
-
-if exist "%USERPROFILE%\anaconda3\python.exe" (
-    set "PYTHON_PATH=%USERPROFILE%\anaconda3\python.exe"
-    echo [OK]  Python trouvé dans Anaconda (User)
-    goto python_found
-)
-
-if exist "%LOCALAPPDATA%\Programs\Python\Python312\python.exe" (
-    set "PYTHON_PATH=%LOCALAPPDATA%\Programs\Python\Python312\python.exe"
-    echo [OK]  Python 3.12 trouvé
-    goto python_found
-)
-
-if exist "%LOCALAPPDATA%\Programs\Python\Python311\python.exe" (
-    set "PYTHON_PATH=%LOCALAPPDATA%\Programs\Python\Python311\python.exe"
-    echo [OK]  Python 3.11 trouvé
-    goto python_found
-)
-
-REM Essayer Python dans le PATH
-where python >nul 2>&1
-if not errorlevel 1 (
-    set "PYTHON_PATH=python"
-    echo [OK]  Python trouvé dans PATH
-    goto python_found
-)
-
-echo [ERREUR] Python non trouvé!
-echo          Installez Python ou créez un environnement virtuel.
+REM Si pas de venv_windows, afficher une erreur
+echo [ERREUR] L'environnement virtuel n'existe pas!
+echo.
+echo          Executez d'abord: "Installation Windows.bat"
+echo          Ce script cree l'environnement Python necessaire.
+echo.
 pause
 exit /b 1
 
