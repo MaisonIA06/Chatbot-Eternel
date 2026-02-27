@@ -27,13 +27,8 @@ REM ============================================================
 REM Configuration du modèle
 REM Identifiant complet attendu par l'API LM Studio
 REM ============================================================
-<<<<<<< HEAD
-set "MODEL_NAME=meta-llama-3-8b-instruct"
-set "MODEL_SEARCH=llama"
-=======
 set "MODEL_NAME=lmstudio-community/Meta-Llama-3.1-8B-Instruct-GGUF/Meta-Llama-3.1-8B-Instruct-Q4_K_M.gguf"
 set "MODEL_SEARCH=Meta-Llama-3.1-8B-Instruct-Q4_K_M.gguf"
->>>>>>> 570d3dee022bd4f6d32c0ead716555f8f7828d54
 
 REM ============================================================
 REM 1. Démarrer le serveur LM Studio

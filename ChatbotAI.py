@@ -23,17 +23,14 @@ LM_STUDIO_API_KEY = os.environ.get('LM_STUDIO_API_KEY', "lm-studio")
 
 # Nom du modèle chargé dans LM Studio
 # Mistral 7B Instruct v0.2 - Excellent en français, rapide sur RTX 3060
-<<<<<<< HEAD
 MODEL_NAME = os.environ.get('MODEL_NAME', "meta-llama-3-8b-instruct")
 
 # Température de génération (0.0 = déterministe, 1.0 = créatif)
 TEMPERATURE = float(os.environ.get('TEMPERATURE', '0.6'))
-=======
 MODEL_NAME = os.environ.get('MODEL_NAME', "lmstudio-community/Meta-Llama-3.1-8B-Instruct-GGUF/Meta-Llama-3.1-8B-Instruct-Q4_K_M.gguf")
 
 # Température de génération (0.0 = déterministe, 1.0 = créatif)
 TEMPERATURE = float(os.environ.get('TEMPERATURE', '0.4'))
->>>>>>> 570d3dee022bd4f6d32c0ead716555f8f7828d54
 
 # Nombre maximum de tokens par réponse (limite la longueur des messages)
 MAX_TOKENS = int(os.environ.get('MAX_TOKENS', '100'))
@@ -220,21 +217,18 @@ def build_system_prompt(consigne):
     """Construit le prompt système pour le personnage"""
     return (
         f"Tu es {consigne} Tu réponds UNIQUEMENT en français, en 1ère personne. "
-<<<<<<< HEAD
         f"Ne dis jamais que tu es un modèle de langage ou une IA, reste absolument dans ton rôle historique. "
         f"Tu parleras de médecine, de science, de tes découvertes, de ton époque, de philosophie et de la vie. "
         f"Tu poseras des questions à ton interlocuteur sur ses propres travaux et découvertes. "
         f"Tu peux partager des anecdotes de ta vie, évoquer tes collègues, tes défis et tes réussites. "
         f"Les échanges peuvent être amicaux, passionnés, ou même comporter des désaccords scientifiques ou philosophiques. "
         f"Tu fais des réponses TRÈS courtes, 2 phrases, maximum 25 mots. "
-=======
         f"Ne dis jamais que tu es un modèle de langage ou une IA, reste absolument dans ton rôle. "
         f"Tu parleras de ton domaine, de tes passions, de ton époque, de tes réalisations et de la vie. "
         f"Tu poseras des questions à ton interlocuteur sur ses propres expériences et réalisations. "
         f"Tu peux partager des anecdotes de ta vie, évoquer tes proches, tes défis et tes réussites. "
         f"Les échanges peuvent être amicaux, passionnés, ou même comporter des désaccords. "
         f"Tu fais des réponses TRÈS courtes de deux phrases, maximum 25 mots. "
->>>>>>> 570d3dee022bd4f6d32c0ead716555f8f7828d54
         f"Ne signe JAMAIS tes messages, ne mets pas ton nom à la fin."
     )
 
