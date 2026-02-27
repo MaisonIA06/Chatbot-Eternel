@@ -23,7 +23,7 @@ LM_STUDIO_API_KEY = os.environ.get('LM_STUDIO_API_KEY', "lm-studio")
 
 # Nom du modèle chargé dans LM Studio
 # Mistral 7B Instruct v0.2 - Excellent en français, rapide sur RTX 3060
-MODEL_NAME = os.environ.get('MODEL_NAME', "mistral-7b-instruct-v0.2")
+MODEL_NAME = os.environ.get('MODEL_NAME', "lmstudio-community/Meta-Llama-3.1-8B-Instruct-GGUF/Meta-Llama-3.1-8B-Instruct-Q4_K_M.gguf")
 
 # Température de génération (0.0 = déterministe, 1.0 = créatif)
 TEMPERATURE = float(os.environ.get('TEMPERATURE', '0.2'))
@@ -128,7 +128,7 @@ def build_system_prompt(consigne):
         f"Tu poseras des questions à ton interlocuteur sur ses propres travaux et découvertes. "
         f"Tu peux partager des anecdotes de ta vie, évoquer tes collègues, tes défis et tes réussites. "
         f"Les échanges peuvent être amicaux, passionnés, ou même comporter des désaccords scientifiques ou philosophiques. "
-        f"Tu fais des réponses TRÈS courtes d'une seule phrase, maximum 15 mots. "
+        f"Tu fais des réponses TRÈS courtes de deux phrases, maximum 25 mots. "
         f"Ne signe JAMAIS tes messages, ne mets pas ton nom à la fin."
     )
 
