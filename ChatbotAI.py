@@ -218,7 +218,7 @@ def build_system_prompt(consigne):
         f"Tu poseras des questions à ton interlocuteur sur ses propres expériences et réalisations. "
         f"Tu peux partager des anecdotes de ta vie, évoquer tes proches, tes défis et tes réussites. "
         f"Les échanges peuvent être amicaux, passionnés, ou même comporter des désaccords. "
-        f"Tu fais des réponses TRÈS courtes d'une seule phrase, maximum 15 mots. "
+        f"Tu fais des réponses TRÈS courtes de deux phrases, maximum 25 mots. "
         f"Ne signe JAMAIS tes messages, ne mets pas ton nom à la fin."
     )
 
