@@ -166,21 +166,29 @@ h1, h3, h4 {
 }
 
 /* Scrollbar personnalisée */
-#chatbox::-webkit-scrollbar {
-    width: 8px;
+#chatbox::-webkit-scrollbar,
+.left-panel::-webkit-scrollbar,
+.right-panel::-webkit-scrollbar {
+    width: 6px;
 }
 
-#chatbox::-webkit-scrollbar-track {
+#chatbox::-webkit-scrollbar-track,
+.left-panel::-webkit-scrollbar-track,
+.right-panel::-webkit-scrollbar-track {
     background: var(--bg-dark);
     border-radius: 4px;
 }
 
-#chatbox::-webkit-scrollbar-thumb {
+#chatbox::-webkit-scrollbar-thumb,
+.left-panel::-webkit-scrollbar-thumb,
+.right-panel::-webkit-scrollbar-thumb {
     background: var(--mia-navy);
     border-radius: 4px;
 }
 
-#chatbox::-webkit-scrollbar-thumb:hover {
+#chatbox::-webkit-scrollbar-thumb:hover,
+.left-panel::-webkit-scrollbar-thumb:hover,
+.right-panel::-webkit-scrollbar-thumb:hover {
     background: var(--mia-navy-light);
 }
 
@@ -313,9 +321,10 @@ h1, h3, h4 {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 12px;
-    width: 280px;
-    padding: 20px;
+    gap: 10px;
+    width: 310px;
+    max-height: calc(100vh - 40px);
+    padding: 16px;
     background: var(--bg-card);
     border: 1px solid var(--border-subtle);
     border-radius: 20px;
@@ -323,6 +332,8 @@ h1, h3, h4 {
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
     z-index: 10;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 
 .left-panel {
@@ -335,27 +346,21 @@ h1, h3, h4 {
 
 .left-panel h4,
 .right-panel h4 {
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     color: var(--text-secondary);
     text-transform: uppercase;
     letter-spacing: 1px;
-    margin-bottom: 8px;
+    margin-bottom: 4px;
     font-weight: 600;
+    flex-shrink: 0;
 }
 
-/* -------- Grille de Personnages -------- */
-.character-columns {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    gap: 16px;
-    flex-wrap: nowrap;
-}
-
-.character-column {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
+/* -------- Grille de Personnages (3 colonnes) -------- */
+.character-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    width: 100%;
 }
 
 /* -------- Carte Personnage -------- */
@@ -363,10 +368,10 @@ h1, h3, h4 {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 8px;
+    gap: 4px;
     cursor: pointer;
-    padding: 10px;
-    border-radius: 14px;
+    padding: 6px;
+    border-radius: 12px;
     transition: var(--transition-smooth);
     border: 2px solid transparent;
     background: rgba(25, 50, 80, 0.6);
@@ -377,7 +382,7 @@ h1, h3, h4 {
 .image-row:hover {
     background: rgba(40, 75, 115, 0.8);
     border-color: var(--border-active);
-    transform: translateY(-4px);
+    transform: translateY(-3px);
     box-shadow: var(--shadow-glow);
 }
 
@@ -396,11 +401,12 @@ h1, h3, h4 {
 .image-row p {
     margin: 0;
     padding: 0;
-    font-size: 0.8rem;
+    font-size: 0.65rem;
     font-weight: 600;
     color: var(--text-secondary);
     text-align: center;
     transition: var(--transition-fast);
+    line-height: 1.2;
 }
 
 .image-row:hover p {
@@ -408,16 +414,16 @@ h1, h3, h4 {
 }
 
 .image-row img {
-    width: 100px;
-    height: 100px;
+    width: 72px;
+    height: 72px;
     object-fit: cover;
-    border-radius: 12px;
+    border-radius: 10px;
     transition: var(--transition-smooth);
     border: 2px solid var(--border-subtle);
 }
 
 .image-row:hover img {
-    transform: scale(1.08);
+    transform: scale(1.06);
     border-color: var(--mia-terracotta);
 }
 
@@ -442,20 +448,24 @@ h1, h3, h4 {
     color: var(--mia-terracotta-light);
 }
 
-/* -------- Responsive - Grands Écrans -------- */
+/* -------- Responsive - Très Grands Écrans -------- */
 @media (min-width: 1800px) {
     .chat-container {
         max-width: 1000px;
     }
     
     .image-row img {
-        width: 110px;
-        height: 110px;
+        width: 80px;
+        height: 80px;
     }
     
     .left-panel,
     .right-panel {
-        width: 300px;
+        width: 340px;
+    }
+
+    .image-row p {
+        font-size: 0.7rem;
     }
 }
 
@@ -493,25 +503,25 @@ h1, h3, h4 {
     
     .left-panel,
     .right-panel {
-        width: 200px;
-        padding: 12px;
+        width: 240px;
+        padding: 10px;
     }
     
     .image-row img {
-        width: 60px;
-        height: 60px;
+        width: 55px;
+        height: 55px;
     }
     
     .image-row {
-        padding: 6px;
+        padding: 4px;
     }
     
     .image-row p {
-        font-size: 0.65rem;
+        font-size: 0.6rem;
     }
     
-    .character-column {
-        gap: 8px;
+    .character-grid {
+        gap: 6px;
     }
     
     .disclaimer {
@@ -549,13 +559,21 @@ h1, h3, h4 {
     
     .left-panel,
     .right-panel {
-        width: 160px;
-        padding: 10px;
+        width: 190px;
+        padding: 8px;
     }
     
     .image-row img {
-        width: 50px;
-        height: 50px;
+        width: 45px;
+        height: 45px;
+    }
+
+    .image-row p {
+        font-size: 0.55rem;
+    }
+    
+    .character-grid {
+        gap: 4px;
     }
     
     .disclaimer {
@@ -567,42 +585,46 @@ h1, h3, h4 {
 @media (max-width: 1500px) {
     .left-panel,
     .right-panel {
-        width: 240px;
-        padding: 16px;
+        width: 270px;
+        padding: 12px;
     }
     
     .image-row img {
-        width: 75px;
-        height: 75px;
+        width: 64px;
+        height: 64px;
     }
     
     .image-row {
-        padding: 8px;
+        padding: 5px;
     }
     
-    .character-column {
-        gap: 12px;
+    .character-grid {
+        gap: 6px;
     }
 }
 
 @media (max-width: 1300px) {
     .left-panel,
     .right-panel {
-        width: 200px;
-        padding: 14px;
+        width: 230px;
+        padding: 10px;
     }
     
     .image-row img {
-        width: 65px;
-        height: 65px;
+        width: 55px;
+        height: 55px;
     }
     
     .image-row p {
-        font-size: 0.7rem;
+        font-size: 0.6rem;
     }
     
     .chat-container {
-        width: 55%;
+        width: 50%;
+    }
+
+    .character-grid {
+        gap: 5px;
     }
 }
 
@@ -623,11 +645,13 @@ h1, h3, h4 {
         right: auto;
         transform: none;
         width: 100%;
-        max-width: 600px;
+        max-width: 700px;
+        max-height: none;
         margin: 20px auto;
-        flex-direction: row;
+        flex-direction: column;
         flex-wrap: wrap;
         justify-content: center;
+        overflow-y: visible;
     }
     
     .left-panel h4,
@@ -635,14 +659,9 @@ h1, h3, h4 {
         width: 100%;
     }
     
-    .character-columns {
-        flex-wrap: wrap;
-        justify-content: center;
-    }
-    
-    .character-column {
-        flex-direction: row;
-        gap: 12px;
+    .character-grid {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 8px;
     }
     
     .chat-container {
@@ -689,19 +708,35 @@ h1, h3, h4 {
         font-size: 0.9rem;
     }
     
+    .character-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 6px;
+    }
+    
     .image-row img {
-        width: 55px;
-        height: 55px;
+        width: 50px;
+        height: 50px;
     }
     
     .image-row p {
-        font-size: 0.65rem;
+        font-size: 0.6rem;
     }
     
     .left-panel,
     .right-panel {
         padding: 12px;
         border-radius: 14px;
+    }
+}
+
+@media (max-width: 480px) {
+    .character-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .image-row img {
+        width: 55px;
+        height: 55px;
     }
 }
 

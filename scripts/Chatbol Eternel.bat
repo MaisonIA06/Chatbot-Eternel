@@ -25,17 +25,21 @@ echo.
 
 REM ============================================================
 REM Configuration du modèle
-REM Mistral 7B Instruct v0.2 - Excellent en français, rapide
-REM Nécessite environ 6-8 Go de VRAM (GPU)
+REM Identifiant complet attendu par l'API LM Studio
 REM ============================================================
+<<<<<<< HEAD
 set "MODEL_NAME=meta-llama-3-8b-instruct"
 set "MODEL_SEARCH=llama"
+=======
+set "MODEL_NAME=lmstudio-community/Meta-Llama-3.1-8B-Instruct-GGUF/Meta-Llama-3.1-8B-Instruct-Q4_K_M.gguf"
+set "MODEL_SEARCH=Meta-Llama-3.1-8B-Instruct-Q4_K_M.gguf"
+>>>>>>> 570d3dee022bd4f6d32c0ead716555f8f7828d54
 
 REM ============================================================
 REM 1. Démarrer le serveur LM Studio
 REM ============================================================
 echo [1/5] Démarrage du serveur LM Studio...
-lms server start
+start "LM Studio Server" /MIN cmd /c "lms server start"
 
 :wait_for_server
     lms ps >nul 2>&1
@@ -52,6 +56,14 @@ REM 2. Charger le modèle
 REM ============================================================
 echo [2/5] Chargement du modèle...
 echo       Modèle: %MODEL_NAME%
+
+REM Éviter de charger plusieurs instances du même modèle
+lms ps | findstr /I /C:"%MODEL_SEARCH%" >nul
+if not errorlevel 1 (
+    echo       Modèle déjà chargé, étape ignorée.
+    goto model_ready
+)
+
 lms load "%MODEL_NAME%"
 
 :wait_for_model
@@ -62,6 +74,7 @@ lms load "%MODEL_NAME%"
         goto wait_for_model
     )
 echo [OK]  Modèle chargé!
+:model_ready
 echo.
 
 REM ============================================================
