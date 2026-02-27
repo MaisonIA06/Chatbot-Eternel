@@ -1,8 +1,8 @@
 # Chatbot Éternel - MIA La Maison de l'IA
 
-**Dialogues fictifs entre grandes figures de l'histoire de la médecine**
+**Dialogues fictifs entre grandes figures de l'Histoire et de la fiction**
 
-Un chatbot interactif qui simule des conversations entre personnages historiques célèbres du monde médical et scientifique, propulsé par l'IA locale via LM Studio.
+Un chatbot interactif qui simule des conversations entre personnages historiques et fictifs célèbres, propulsé par l'IA locale via LM Studio.
 
 ![Python](https://img.shields.io/badge/Python-3.10+-blue.svg)
 ![Flask](https://img.shields.io/badge/Flask-3.x-green.svg)
@@ -27,11 +27,11 @@ Un chatbot interactif qui simule des conversations entre personnages historiques
 
 ## Présentation
 
-**Chatbot Éternel** est une application web qui génère des dialogues fictifs et automatiques entre deux personnages historiques de la médecine. L'IA joue alternativement chaque rôle, créant des échanges fascinants sur la science, la médecine, la philosophie et la vie.
+**Chatbot Éternel** est une application web qui génère des dialogues fictifs et automatiques entre deux personnages célèbres de l'Histoire ou de la fiction. L'IA joue alternativement chaque rôle, créant des échanges fascinants sur la science, l'art, la philosophie, l'histoire et la vie.
 
 ### Fonctionnalités
 
-- **8 personnages historiques** avec des personnalités distinctes
+- **23 personnages** avec des personnalités distinctes (historiques et fictifs)
 - **IA locale** via LM Studio (pas de données envoyées sur internet)
 - **Dialogues automatiques** qui s'enchaînent naturellement
 - **Interface moderne** avec thème sombre élégant
@@ -42,23 +42,38 @@ Un chatbot interactif qui simule des conversations entre personnages historiques
 
 ## Personnages
 
-### Pionnières (Groupe 1)
+### Groupe 1 (Panel gauche)
 
-| Personnage | Époque | Spécialité |
-|------------|--------|------------|
-| **Hildegarde de Bingen** | 1098-1179 | Médecine naturelle, mysticisme |
-| **Florence Nightingale** | 1820-1910 | Soins infirmiers, hygiène |
-| **Marie Curie** | 1867-1934 | Radioactivité, physique |
+| Personnage | Époque | Domaine |
+|------------|--------|---------|
+| **Ada Lovelace** | 1815-1852 | Mathématiques, Informatique |
+| **Hildegarde de Bingen** | 1098-1179 | Médecine naturelle, Mysticisme |
+| **Florence Nightingale** | 1820-1910 | Soins infirmiers, Hygiène |
+| **Marie Curie** | 1867-1934 | Radioactivité, Physique |
 | **Rosalind Franklin** | 1920-1958 | Cristallographie, ADN |
+| **Coco Chanel** | 1883-1971 | Mode, Élégance |
+| **Édith Piaf** | 1915-1963 | Musique, Chanson française |
+| **Marie Antoinette** | 1755-1793 | Histoire de France |
+| **Simone Veil** | 1927-2017 | Politique, Droits des femmes |
+| **Nikola Tesla** | 1856-1943 | Invention, Électricité |
+| **Dumbledore** | Fiction | Sorcellerie (Harry Potter) |
+| **Voldemort** | Fiction | Magie noire (Harry Potter) |
 
-### Pionniers (Groupe 2)
+### Groupe 2 (Panel droit)
 
-| Personnage | Époque | Spécialité |
-|------------|--------|------------|
+| Personnage | Époque | Domaine |
+|------------|--------|---------|
 | **Hippocrate** | ~460-370 av. J.-C. | Médecine rationnelle |
-| **Avicenne** | 980-1037 | Médecine islamique, philosophie |
-| **Louis Pasteur** | 1822-1895 | Microbiologie, vaccination |
-| **Alexander Fleming** | 1881-1955 | Pénicilline, antibiotiques |
+| **Avicenne** | 980-1037 | Médecine, Philosophie |
+| **Louis Pasteur** | 1822-1895 | Microbiologie, Vaccination |
+| **Alexander Fleming** | 1881-1955 | Pénicilline, Antibiotiques |
+| **Alan Turing** | 1912-1954 | Informatique, Cryptologie |
+| **Jean-Michel Basquiat** | 1960-1988 | Art contemporain |
+| **Albert Camus** | 1913-1960 | Littérature, Philosophie |
+| **Sigmund Freud** | 1856-1939 | Psychanalyse |
+| **Napoléon** | 1769-1821 | Histoire militaire, Politique |
+| **Paul Walker** | 1973-2013 | Cinéma, Humanitaire |
+| **Darth Vader** | Fiction | Côté Obscur (Star Wars) |
 
 ---
 
@@ -182,17 +197,22 @@ pip install -r requirements.txt
 ### Interface
 
 ```
-┌─────────────────────────────────────────────────────────┐
-│  [Pionnières]     CHATBOT ÉTERNEL        [Pionniers]    │
-│                                                         │
-│  Hildegarde    ┌─────────────────────┐    Hippocrate    │
-│  Nightingale   │  Marie Curie:       │    Avicenne      │
-│  Marie Curie   │  "Bonjour Louis!"   │    Pasteur       │
-│  Franklin      │                     │    Fleming       │
-│                │  Louis Pasteur:     │                  │
-│                │  "Chère Marie!"     │                  │
-│                └─────────────────────┘                  │
-└─────────────────────────────────────────────────────────┘
+┌──────────────────────────────────────────────────────────────┐
+│  [Groupe 1]        CHATBOT ÉTERNEL            [Groupe 2]     │
+│                                                              │
+│  Ada         ┌──────────────────────────┐    Hippocrate      │
+│  Hildegarde  │  Marie Curie:            │    Avicenne        │
+│  Nightingale │  "Bonjour Napoléon !"    │    Pasteur         │
+│  M. Curie    │                          │    Fleming         │
+│  Franklin    │  Napoléon:               │    Turing          │
+│  Chanel      │  "Chère Marie !"         │    Basquiat        │
+│  Piaf        └──────────────────────────┘    Camus           │
+│  Antoinette                                  Freud           │
+│  S. Veil                                     Napoléon        │
+│  Tesla                                       P. Walker       │
+│  Dumbledore                                  Darth Vader     │
+│  Voldemort                                                   │
+└──────────────────────────────────────────────────────────────┘
 ```
 
 ---
@@ -254,7 +274,7 @@ chatbot eternel/
 │   ├── style.css          # Styles CSS (dark theme MIA)
 │   ├── logo_mia.png       # Logo MIA
 │   ├── MIA_Assets13.jpg   # Image de fond
-│   └── *.png/jpg/webp     # Portraits des personnages
+│   └── *.png/jpg/webp     # Portraits des 23 personnages
 │
 ├── venv_windows/          # Environnement virtuel Windows (créé par le script)
 │
@@ -297,7 +317,7 @@ chatbot eternel/
 - [LM Studio](https://lmstudio.ai/) - Interface IA locale
 - [Mistral AI](https://mistral.ai/) - Modèle de langage
 
-### Personnages historiques
+### Personnages historiques et fictifs
 
 Les portraits et informations biographiques sont utilisés à des fins éducatives et de divertissement.
 
@@ -311,5 +331,5 @@ Ce projet est propriétaire. Tous droits réservés © MIA - La Maison de l'IA 2
 
 <p align="center">
   <strong>Chatbot Éternel</strong><br>
-  <em>Quand les géants de la médecine se rencontrent...</em>
+  <em>Quand les grandes figures de l'Histoire se rencontrent...</em>
 </p>

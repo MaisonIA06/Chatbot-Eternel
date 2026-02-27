@@ -14,29 +14,57 @@
 
 <body>
     <div class="layout">
-        <!-- Panel Gauche - Pionnières de la médecine -->
+        <!-- Panel Gauche - Groupe 1 -->
         <div class="left-panel">
-            <h4>Pionnières</h4>
-            <div class="character-columns">
-                <div class="character-column">
-                    <div class="image-row" role="button" tabindex="0" data-name="Hildegarde de Bingen" data-column="1">
-                        <img src="{{ url_for('static', filename='Hildegarde de Bingen.webp') }}" alt="Hildegarde de Bingen">
-                        <p>Hildegarde</p>
-                    </div>
-                    <div class="image-row" role="button" tabindex="0" data-name="Florence Nightingale" data-column="1">
-                        <img src="{{ url_for('static', filename='Florence_Nightingale.jpg') }}" alt="Florence Nightingale">
-                        <p>Nightingale</p>
-                    </div>
+            <h4>Groupe 1</h4>
+            <div class="character-grid">
+                <div class="image-row" role="button" tabindex="0" data-name="Ada Lovelace" data-column="1">
+                    <img src="{{ url_for('static', filename='ada.png') }}" alt="Ada Lovelace">
+                    <p>Ada Lovelace</p>
                 </div>
-                <div class="character-column">
-                    <div class="image-row" role="button" tabindex="0" data-name="Marie Curie" data-column="1">
-                        <img src="{{ url_for('static', filename='marie_curie.png') }}" alt="Marie Curie">
-                        <p>Marie Curie</p>
-                    </div>
-                    <div class="image-row" role="button" tabindex="0" data-name="Rosalind Franklin" data-column="1">
-                        <img src="{{ url_for('static', filename='Rosalind Franklin.webp') }}" alt="Rosalind Franklin">
-                        <p>R. Franklin</p>
-                    </div>
+                <div class="image-row" role="button" tabindex="0" data-name="Hildegarde de Bingen" data-column="1">
+                    <img src="{{ url_for('static', filename='Hildegarde de Bingen.webp') }}" alt="Hildegarde de Bingen">
+                    <p>Hildegarde</p>
+                </div>
+                <div class="image-row" role="button" tabindex="0" data-name="Florence Nightingale" data-column="1">
+                    <img src="{{ url_for('static', filename='Florence_Nightingale.jpg') }}" alt="Florence Nightingale">
+                    <p>Nightingale</p>
+                </div>
+                <div class="image-row" role="button" tabindex="0" data-name="Marie Curie" data-column="1">
+                    <img src="{{ url_for('static', filename='marie_curie.png') }}" alt="Marie Curie">
+                    <p>Marie Curie</p>
+                </div>
+                <div class="image-row" role="button" tabindex="0" data-name="Rosalind Franklin" data-column="1">
+                    <img src="{{ url_for('static', filename='Rosalind Franklin.webp') }}" alt="Rosalind Franklin">
+                    <p>R. Franklin</p>
+                </div>
+                <div class="image-row" role="button" tabindex="0" data-name="Coco Chanel" data-column="1">
+                    <img src="{{ url_for('static', filename='coco_chanel.jpg') }}" alt="Coco Chanel">
+                    <p>Coco Chanel</p>
+                </div>
+                <div class="image-row" role="button" tabindex="0" data-name="Édith Piaf" data-column="1">
+                    <img src="{{ url_for('static', filename='edith_piaf.png') }}" alt="Édith Piaf">
+                    <p>Édith Piaf</p>
+                </div>
+                <div class="image-row" role="button" tabindex="0" data-name="Marie Antoinette" data-column="1">
+                    <img src="{{ url_for('static', filename='marie_antoinette.jpg') }}" alt="Marie Antoinette">
+                    <p>M. Antoinette</p>
+                </div>
+                <div class="image-row" role="button" tabindex="0" data-name="Simone Veil" data-column="1">
+                    <img src="{{ url_for('static', filename='simone_veil.png') }}" alt="Simone Veil">
+                    <p>Simone Veil</p>
+                </div>
+                <div class="image-row" role="button" tabindex="0" data-name="Nikola Tesla" data-column="1">
+                    <img src="{{ url_for('static', filename='tesla.png') }}" alt="Nikola Tesla">
+                    <p>Tesla</p>
+                </div>
+                <div class="image-row" role="button" tabindex="0" data-name="Dumbledore" data-column="1">
+                    <img src="{{ url_for('static', filename='dumbledore.jpg') }}" alt="Dumbledore">
+                    <p>Dumbledore</p>
+                </div>
+                <div class="image-row" role="button" tabindex="0" data-name="Voldemort" data-column="1">
+                    <img src="{{ url_for('static', filename='voldemort.png') }}" alt="Voldemort">
+                    <p>Voldemort</p>
                 </div>
             </div>
         </div>
@@ -45,36 +73,60 @@
         <div class="chat-container">
             <img src="{{ url_for('static', filename='logo_mia.png') }}" alt="MIA - La Maison de l'IA" class="logo">
             <h1 id="title">Chatbot Éternel</h1>
-            <h3 id="subtitle">Dialogues entre grandes figures de la médecine</h3>
+            <h3 id="subtitle">Dialogues entre grandes figures de l'Histoire et de la fiction</h3>
             <h3 id="initial-roles"></h3>
             <div id="chatbox">
                 <div id="messages"></div>
             </div>
         </div>
 
-        <!-- Panel Droit - Pères de la médecine -->
+        <!-- Panel Droit - Groupe 2 -->
         <div class="right-panel">
-            <h4>Pionniers</h4>
-            <div class="character-columns">
-                <div class="character-column">
-                    <div class="image-row" role="button" tabindex="0" data-name="Hippocrate" data-column="2">
-                        <img src="{{ url_for('static', filename='Hippocrate.jpeg') }}" alt="Hippocrate">
-                        <p>Hippocrate</p>
-                    </div>
-                    <div class="image-row" role="button" tabindex="0" data-name="Avicenne" data-column="2">
-                        <img src="{{ url_for('static', filename='avicenne.jpg') }}" alt="Avicenne">
-                        <p>Avicenne</p>
-                    </div>
+            <h4>Groupe 2</h4>
+            <div class="character-grid">
+                <div class="image-row" role="button" tabindex="0" data-name="Hippocrate" data-column="2">
+                    <img src="{{ url_for('static', filename='Hippocrate.jpeg') }}" alt="Hippocrate">
+                    <p>Hippocrate</p>
                 </div>
-                <div class="character-column">
-                    <div class="image-row" role="button" tabindex="0" data-name="Louis Pasteur" data-column="2">
-                        <img src="{{ url_for('static', filename='Louis Pasteur.jpg') }}" alt="Louis Pasteur">
-                        <p>L. Pasteur</p>
-                    </div>
-                    <div class="image-row" role="button" tabindex="0" data-name="Alexander Fleming" data-column="2">
-                        <img src="{{ url_for('static', filename='Alexander Fleming.avif') }}" alt="Alexander Fleming">
-                        <p>A. Fleming</p>
-                    </div>
+                <div class="image-row" role="button" tabindex="0" data-name="Avicenne" data-column="2">
+                    <img src="{{ url_for('static', filename='avicenne.jpg') }}" alt="Avicenne">
+                    <p>Avicenne</p>
+                </div>
+                <div class="image-row" role="button" tabindex="0" data-name="Louis Pasteur" data-column="2">
+                    <img src="{{ url_for('static', filename='Louis Pasteur.jpg') }}" alt="Louis Pasteur">
+                    <p>L. Pasteur</p>
+                </div>
+                <div class="image-row" role="button" tabindex="0" data-name="Alexander Fleming" data-column="2">
+                    <img src="{{ url_for('static', filename='Alexander Fleming.avif') }}" alt="Alexander Fleming">
+                    <p>A. Fleming</p>
+                </div>
+                <div class="image-row" role="button" tabindex="0" data-name="Alan Turing" data-column="2">
+                    <img src="{{ url_for('static', filename='alan_turing.png') }}" alt="Alan Turing">
+                    <p>Alan Turing</p>
+                </div>
+                <div class="image-row" role="button" tabindex="0" data-name="Jean-Michel Basquiat" data-column="2">
+                    <img src="{{ url_for('static', filename='basquiat.jpg') }}" alt="Jean-Michel Basquiat">
+                    <p>Basquiat</p>
+                </div>
+                <div class="image-row" role="button" tabindex="0" data-name="Albert Camus" data-column="2">
+                    <img src="{{ url_for('static', filename='camus.jpg') }}" alt="Albert Camus">
+                    <p>Camus</p>
+                </div>
+                <div class="image-row" role="button" tabindex="0" data-name="Sigmund Freud" data-column="2">
+                    <img src="{{ url_for('static', filename='freud.png') }}" alt="Sigmund Freud">
+                    <p>Freud</p>
+                </div>
+                <div class="image-row" role="button" tabindex="0" data-name="Napoléon" data-column="2">
+                    <img src="{{ url_for('static', filename='napoleon.jpg') }}" alt="Napoléon">
+                    <p>Napoléon</p>
+                </div>
+                <div class="image-row" role="button" tabindex="0" data-name="Paul Walker" data-column="2">
+                    <img src="{{ url_for('static', filename='paul_walker.png') }}" alt="Paul Walker">
+                    <p>Paul Walker</p>
+                </div>
+                <div class="image-row" role="button" tabindex="0" data-name="Darth Vader" data-column="2">
+                    <img src="{{ url_for('static', filename='darth_vader.jpg') }}" alt="Darth Vader">
+                    <p>Darth Vader</p>
                 </div>
             </div>
         </div>
@@ -92,7 +144,7 @@
     <script>
         // ============================================================
         // CHATBOT ETERNEL - JavaScript
-        // Thème : Grandes figures de la médecine
+        // Thème : Grandes figures de l'Histoire et de la fiction
         // ============================================================
 
         // -------- CONFIGURATION --------
@@ -199,7 +251,7 @@
             if (message === '') {
                 messagesContainer.innerHTML += 
                     '<div class="message center-response init-message">' +
-                    '<span>Initialisation de la conversation médicale...</span>' +
+                    '<span>Initialisation de la conversation...</span>' +
                     '</div>';
             } else {
                 const initMsg = document.querySelector('.init-message');
