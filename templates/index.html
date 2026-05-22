@@ -13,6 +13,59 @@
 </head>
 
 <body>
+    <!-- ============================================================
+         Panneau Empreinte Carbone - CodeCarbon (temps réel)
+         ============================================================ -->
+    <aside id="eco-panel" aria-label="Empreinte carbone en direct">
+        <div class="eco-header">
+            <span class="eco-dot" title="Mesure en direct"></span>
+            <div class="eco-header-text">
+                <div class="eco-title">Empreinte carbone</div>
+                <div class="eco-subtitle">Mesurée en direct sur cette machine</div>
+            </div>
+        </div>
+
+        <div class="eco-grid">
+            <div class="eco-card eco-card-co2">
+                <div class="eco-card-label">CO<sub>2</sub> émis</div>
+                <div class="eco-card-value" id="eco-co2">—</div>
+                <div class="eco-card-equiv" id="eco-equiv-voiture">
+                    soit un trajet en voiture
+                </div>
+            </div>
+
+            <div class="eco-card eco-card-energy">
+                <div class="eco-card-label">Énergie consommée</div>
+                <div class="eco-card-value" id="eco-energy">—</div>
+                <div class="eco-card-equiv" id="eco-equiv-led">
+                    soit une ampoule LED allumée
+                </div>
+            </div>
+
+            <div class="eco-card eco-card-power">
+                <div class="eco-card-label">Puissance actuelle</div>
+                <div class="eco-card-value" id="eco-power">—</div>
+                <div class="eco-card-equiv" id="eco-power-detail">
+                    GPU + processeur + mémoire
+                </div>
+            </div>
+
+            <div class="eco-card eco-card-duration">
+                <div class="eco-card-label">Durée de la démo</div>
+                <div class="eco-card-value" id="eco-duration">—</div>
+                <div class="eco-card-equiv" id="eco-equiv-smartphone">
+                    soit des recharges de smartphone
+                </div>
+            </div>
+        </div>
+
+        <div class="eco-help">
+            <strong>Comment lire ces chiffres&nbsp;?</strong><br>
+            Le <em>CO<sub>2</sub></em> est ce que la démo rejette dans l'air&nbsp;;
+            l'<em>énergie</em> est ce qu'elle consomme, comme une ampoule allumée.
+        </div>
+    </aside>
+
     <div class="layout">
         <!-- Panel Gauche - Groupe 1 -->
         <div class="left-panel">
@@ -150,6 +203,8 @@
             chatSession++;
             addMessage(currentRole, '');
             continueChat('', chatSession);
+
+            initEcoPanel();
         });
 
         // -------- GESTION DES PERSONNAGES --------
@@ -320,6 +375,110 @@
                         addMessage('Système', 'Erreur de connexion avec le serveur. Vérifiez que LM Studio est en cours d\'exécution.');
                     });
             }, MESSAGE_DELAY);
+        }
+
+        // ============================================================
+        // PANNEAU EMPREINTE CARBONE - CodeCarbon (rafraîchi toutes les 2s)
+        // ============================================================
+        const ECO_REFRESH_MS = 2000;
+
+        function fmtNumber(n, digits = 1) {
+            if (!isFinite(n)) return '0';
+            return n.toLocaleString('fr-FR', {
+                minimumFractionDigits: 0,
+                maximumFractionDigits: digits,
+            });
+        }
+
+        // CO2 : mg / g / kg selon la magnitude
+        function formatCO2(grams) {
+            if (grams < 1) return fmtNumber(grams * 1000, 0) + ' mg';
+            if (grams < 1000) return fmtNumber(grams, 2) + ' g';
+            return fmtNumber(grams / 1000, 3) + ' kg';
+        }
+
+        // Énergie : Wh / kWh
+        function formatEnergy(wh) {
+            if (wh < 1000) return fmtNumber(wh, 2) + ' Wh';
+            return fmtNumber(wh / 1000, 3) + ' kWh';
+        }
+
+        // Durée : s / min / h
+        function formatDuration(sec) {
+            if (sec < 60) return fmtNumber(sec, 0) + ' s';
+            if (sec < 3600) {
+                const m = Math.floor(sec / 60);
+                const s = Math.round(sec % 60);
+                return m + ' min ' + s + ' s';
+            }
+            const h = Math.floor(sec / 3600);
+            const m = Math.floor((sec % 3600) / 60);
+            return h + ' h ' + m + ' min';
+        }
+
+        // Distance : cm / m / km
+        function formatDistance(meters) {
+            if (meters < 1) return fmtNumber(meters * 100, 0) + ' cm';
+            if (meters < 1000) return fmtNumber(meters, 1) + ' m';
+            return fmtNumber(meters / 1000, 2) + ' km';
+        }
+
+        function formatPower(watts) {
+            if (watts < 1) return fmtNumber(watts * 1000, 0) + ' mW';
+            return fmtNumber(watts, 1) + ' W';
+        }
+
+        function setEcoDotState(isLive) {
+            const dot = document.querySelector('.eco-dot');
+            if (!dot) return;
+            if (isLive) {
+                dot.classList.remove('eco-dot-error');
+                dot.title = 'Mesure en direct';
+            } else {
+                dot.classList.add('eco-dot-error');
+                dot.title = 'Mesure indisponible';
+            }
+        }
+
+        async function refreshEcoPanel() {
+            try {
+                const r = await fetch('/emissions', { cache: 'no-store' });
+                if (!r.ok) throw new Error('inactif');
+                const d = await r.json();
+
+                setEcoDotState(true);
+
+                document.getElementById('eco-co2').textContent = formatCO2(d.co2_g || 0);
+                document.getElementById('eco-energy').textContent = formatEnergy(d.energy_wh || 0);
+                document.getElementById('eco-power').textContent = formatPower(d.puissance_totale_w || 0);
+                document.getElementById('eco-duration').textContent = formatDuration(d.duration_s || 0);
+
+                // Équivalences pédagogiques
+                document.getElementById('eco-equiv-voiture').textContent =
+                    'soit ' + formatDistance(d.equiv_voiture_m || 0) + ' en voiture thermique';
+
+                const ledH = d.equiv_led_heures || 0;
+                document.getElementById('eco-equiv-led').textContent =
+                    'soit ' + fmtNumber(ledH, ledH < 1 ? 2 : 1) + ' h d\'ampoule LED 10 W';
+
+                const gpu = d.gpu_w || 0;
+                const cpu = d.cpu_w || 0;
+                const ram = d.ram_w || 0;
+                document.getElementById('eco-power-detail').textContent =
+                    'GPU ' + formatPower(gpu) + ' · CPU ' + formatPower(cpu) + ' · RAM ' + formatPower(ram);
+
+                const recharges = d.equiv_recharges_smartphone || 0;
+                document.getElementById('eco-equiv-smartphone').textContent =
+                    'soit ' + fmtNumber(recharges, recharges < 1 ? 2 : 1) + ' recharge(s) de smartphone';
+
+            } catch (e) {
+                setEcoDotState(false);
+            }
+        }
+
+        function initEcoPanel() {
+            refreshEcoPanel();
+            setInterval(refreshEcoPanel, ECO_REFRESH_MS);
         }
     </script>
 </body>

@@ -6,11 +6,87 @@ Thème : Grandes figures de l'Histoire et de la fiction
 
 from flask import Flask, render_template, request, jsonify, session
 from openai import OpenAI
+from codecarbon import EmissionsTracker
 import requests
 import os
 import secrets
+import time
 
 app = Flask(__name__)
+
+# ============================================================
+# CODECARBON - Mesure de l'empreinte carbone en temps réel
+# ============================================================
+tracker = EmissionsTracker(
+    project_name="Chatbot-Eternel",
+    measure_power_secs=10,
+    log_level="warning",
+)
+TRACKER_ACTIVE = False
+
+
+def _as_float(value):
+    """Extrait une valeur numérique depuis les types internes de CodeCarbon
+    (Energy, Power, etc.) qui exposent .kWh, .W ou peuvent être castés en float.
+    """
+    if value is None:
+        return 0.0
+    for attr in ("kWh", "W", "kgs"):
+        if hasattr(value, attr):
+            try:
+                return float(getattr(value, attr))
+            except (TypeError, ValueError):
+                pass
+    try:
+        return float(value)
+    except (TypeError, ValueError):
+        return 0.0
+
+
+def get_emissions_stats():
+    """Lit les attributs internes du tracker CodeCarbon et renvoie un dict
+    pédagogique : CO2 en grammes, énergie en Wh, puissances en watts, durée
+    et équivalences quotidiennes (voiture, ampoule LED, recharges smartphone).
+    """
+    total_emissions_kg = _as_float(getattr(tracker, "_total_emissions", 0))
+    total_energy_kwh = _as_float(getattr(tracker, "_total_energy", 0))
+    gpu_w = _as_float(getattr(tracker, "_gpu_power", 0))
+    cpu_w = _as_float(getattr(tracker, "_cpu_power", 0))
+    ram_w = _as_float(getattr(tracker, "_ram_power", 0))
+
+    co2_g = total_emissions_kg * 1000.0
+    energy_wh = total_energy_kwh * 1000.0
+    puissance_totale_w = gpu_w + cpu_w + ram_w
+
+    start_time = getattr(tracker, "_start_time", None)
+    if start_time:
+        try:
+            duration_s = max(0.0, time.time() - float(start_time))
+        except (TypeError, ValueError):
+            duration_s = 0.0
+    else:
+        duration_s = 0.0
+
+    # Équivalences pédagogiques
+    # Voiture thermique : 120 g CO2/km -> co2_g / 120 km, converti en mètres
+    equiv_voiture_m = (co2_g / 120.0) * 1000.0 if co2_g > 0 else 0.0
+    # Ampoule LED 10 W : Wh / 10 = heures
+    equiv_led_heures = energy_wh / 10.0 if energy_wh > 0 else 0.0
+    # Recharge smartphone : ~10 Wh par recharge complète
+    equiv_recharges_smartphone = energy_wh / 10.0 if energy_wh > 0 else 0.0
+
+    return {
+        "co2_g": co2_g,
+        "energy_wh": energy_wh,
+        "gpu_w": gpu_w,
+        "cpu_w": cpu_w,
+        "ram_w": ram_w,
+        "puissance_totale_w": puissance_totale_w,
+        "duration_s": duration_s,
+        "equiv_voiture_m": equiv_voiture_m,
+        "equiv_led_heures": equiv_led_heures,
+        "equiv_recharges_smartphone": equiv_recharges_smartphone,
+    }
 
 # Clé secrète pour les sessions Flask (générée automatiquement)
 app.secret_key = os.environ.get('FLASK_SECRET_KEY', secrets.token_hex(32))
@@ -348,6 +424,14 @@ def health_check():
     })
 
 
+@app.route("/emissions")
+def emissions():
+    """Retourne les statistiques d'empreinte carbone mesurées par CodeCarbon"""
+    if not TRACKER_ACTIVE:
+        return jsonify({"error": "tracker inactif"}), 503
+    return jsonify(get_emissions_stats())
+
+
 if __name__ == "__main__":
     print("=" * 60)
     print("🎭 Chatbot Éternel - La Maison de l'IA")
@@ -370,5 +454,15 @@ if __name__ == "__main__":
     print(f"   Groupe 2: {', '.join(ROLES_GROUP_2.keys())}")
     print(f"\n🌐 Serveur: http://localhost:5000")
     print("=" * 60 + "\n")
-    
-    app.run(debug=DEBUG_MODE, host='0.0.0.0', port=5000)
+
+    try:
+        tracker.start()
+        TRACKER_ACTIVE = True
+        print("🌱 CodeCarbon : mesure de l'empreinte carbone démarrée")
+        # use_reloader=False pour éviter un double tracker en mode debug
+        app.run(debug=DEBUG_MODE, host='0.0.0.0', port=5000, use_reloader=False)
+    finally:
+        if TRACKER_ACTIVE:
+            tracker.stop()
+            TRACKER_ACTIVE = False
+            print("🌱 CodeCarbon : mesure arrêtée, rapport écrit dans emissions.csv")
