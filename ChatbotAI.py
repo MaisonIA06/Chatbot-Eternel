@@ -23,6 +23,7 @@ tracker = EmissionsTracker(
     log_level="warning",
 )
 TRACKER_ACTIVE = False
+_eco_start_time = None   # horodatage fiable stocké par nos soins au moment du start()
 
 
 def _as_float(value):
@@ -58,14 +59,7 @@ def get_emissions_stats():
     energy_wh = total_energy_kwh * 1000.0
     puissance_totale_w = gpu_w + cpu_w + ram_w
 
-    start_time = getattr(tracker, "_start_time", None)
-    if start_time:
-        try:
-            duration_s = max(0.0, time.time() - float(start_time))
-        except (TypeError, ValueError):
-            duration_s = 0.0
-    else:
-        duration_s = 0.0
+    duration_s = max(0.0, time.time() - _eco_start_time) if _eco_start_time else 0.0
 
     # Équivalences pédagogiques
     # Voiture thermique : 120 g CO2/km -> co2_g / 120 km, converti en mètres
@@ -455,8 +449,10 @@ if __name__ == "__main__":
     print(f"\n🌐 Serveur: http://localhost:5000")
     print("=" * 60 + "\n")
 
+    global TRACKER_ACTIVE, _eco_start_time
     try:
         tracker.start()
+        _eco_start_time = time.time()
         TRACKER_ACTIVE = True
         print("🌱 CodeCarbon : mesure de l'empreinte carbone démarrée")
         # use_reloader=False pour éviter un double tracker en mode debug
