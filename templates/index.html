@@ -15,54 +15,51 @@
 <body>
     <!-- ============================================================
          Panneau Empreinte Carbone - CodeCarbon (temps réel)
+         Divisé en deux bandeaux : haut-gauche (CO2 / Énergie)
+                                   haut-droit  (Puissance / Durée)
          ============================================================ -->
-    <aside id="eco-panel" aria-label="Empreinte carbone en direct">
+
+    <!-- Bandeau haut-gauche : CO2 + Énergie -->
+    <aside id="eco-panel-left" aria-label="Empreinte carbone — CO2 et énergie">
         <div class="eco-header">
             <span class="eco-dot" title="Mesure en direct"></span>
             <div class="eco-header-text">
                 <div class="eco-title">Empreinte carbone</div>
-                <div class="eco-subtitle">Mesurée en direct sur cette machine</div>
+                <div class="eco-subtitle">Mesurée en direct</div>
             </div>
         </div>
-
-        <div class="eco-grid">
+        <div class="eco-grid eco-grid-col2">
             <div class="eco-card eco-card-co2">
                 <div class="eco-card-label">CO<sub>2</sub> émis</div>
                 <div class="eco-card-value" id="eco-co2">—</div>
-                <div class="eco-card-equiv" id="eco-equiv-voiture">
-                    soit un trajet en voiture
-                </div>
+                <div class="eco-card-equiv" id="eco-equiv-voiture">soit un trajet en voiture</div>
             </div>
-
             <div class="eco-card eco-card-energy">
                 <div class="eco-card-label">Énergie consommée</div>
                 <div class="eco-card-value" id="eco-energy">—</div>
-                <div class="eco-card-equiv" id="eco-equiv-led">
-                    soit une ampoule LED allumée
-                </div>
+                <div class="eco-card-equiv" id="eco-equiv-led">soit une ampoule LED allumée</div>
             </div>
+        </div>
+    </aside>
 
+    <!-- Bandeau haut-droit : Puissance + Durée -->
+    <aside id="eco-panel-right" aria-label="Empreinte carbone — puissance et durée">
+        <div class="eco-grid eco-grid-col2">
             <div class="eco-card eco-card-power">
                 <div class="eco-card-label">Puissance actuelle</div>
                 <div class="eco-card-value" id="eco-power">—</div>
-                <div class="eco-card-equiv" id="eco-power-detail">
-                    GPU + processeur + mémoire
-                </div>
+                <div class="eco-card-equiv" id="eco-power-detail">GPU + processeur + mémoire</div>
             </div>
-
             <div class="eco-card eco-card-duration">
                 <div class="eco-card-label">Durée de la démo</div>
                 <div class="eco-card-value" id="eco-duration">—</div>
-                <div class="eco-card-equiv" id="eco-equiv-smartphone">
-                    soit des recharges de smartphone
-                </div>
+                <div class="eco-card-equiv" id="eco-equiv-smartphone">soit des recharges de smartphone</div>
             </div>
         </div>
-
         <div class="eco-help">
-            <strong>Comment lire ces chiffres&nbsp;?</strong><br>
-            Le <em>CO<sub>2</sub></em> est ce que la démo rejette dans l'air&nbsp;;
-            l'<em>énergie</em> est ce qu'elle consomme, comme une ampoule allumée.
+            <strong>Comment lire ces chiffres&nbsp;?</strong>
+            Le CO<sub>2</sub> est ce que la démo rejette dans l'air&nbsp;;
+            l'énergie est ce qu'elle consomme, comme une ampoule allumée.
         </div>
     </aside>
 
