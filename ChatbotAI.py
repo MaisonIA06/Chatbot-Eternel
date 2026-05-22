@@ -427,6 +427,7 @@ def emissions():
 
 
 if __name__ == "__main__":
+    global TRACKER_ACTIVE, _eco_start_time
     print("=" * 60)
     print("🎭 Chatbot Éternel - La Maison de l'IA")
     print("   Thème : Grandes figures de l'Histoire et de la fiction")
@@ -449,7 +450,6 @@ if __name__ == "__main__":
     print(f"\n🌐 Serveur: http://localhost:5000")
     print("=" * 60 + "\n")
 
-    global TRACKER_ACTIVE, _eco_start_time
     try:
         tracker.start()
         _eco_start_time = time.time()
