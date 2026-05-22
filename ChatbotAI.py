@@ -427,7 +427,6 @@ def emissions():
 
 
 if __name__ == "__main__":
-    global TRACKER_ACTIVE, _eco_start_time
     print("=" * 60)
     print("🎭 Chatbot Éternel - La Maison de l'IA")
     print("   Thème : Grandes figures de l'Histoire et de la fiction")
