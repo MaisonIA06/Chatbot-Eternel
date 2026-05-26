@@ -769,120 +769,116 @@ h1, h3, h4 {
 }
 
 /* ============================================================
-   PANNEAU EMPREINTE CARBONE - CodeCarbon
-   Deux bandeaux compacts : haut-gauche et haut-droit
+   EMPREINTE CARBONE - CodeCarbon
+   Barre compacte intégrée DANS le chat-container, sous la conversation
+   Palette : 100% MIA (terracotta + navy)
    ============================================================ */
 
-/* Base commune aux deux bandeaux */
-#eco-panel-left,
-#eco-panel-right {
-    position: fixed;
-    top: 16px;
-    width: 310px;
-    padding: 12px 14px 11px;
-    background: rgba(15, 25, 40, 0.78);
-    border: 1px solid rgba(255, 255, 255, 0.10);
-    border-radius: 16px;
-    box-shadow: 0 10px 36px rgba(0, 0, 0, 0.45);
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
-    z-index: 100;
+#eco-bar {
+    margin-top: 14px;
+    padding: 10px 14px;
+    background: rgba(20, 45, 75, 0.55);
+    border: 1px solid var(--border-subtle);
+    border-radius: 14px;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     color: var(--text-primary);
     font-family: 'Plus Jakarta Sans', sans-serif;
-    animation: fadeInUp 0.6s ease-out 0.1s backwards;
+    flex-shrink: 0;
+    animation: fadeInUp 0.6s ease-out 0.5s backwards;
 }
 
-#eco-panel-left  { left: 16px; }
-#eco-panel-right { right: 16px; }
-
-#eco-panel-left::-webkit-scrollbar,
-#eco-panel-right::-webkit-scrollbar { width: 6px; }
-#eco-panel-left::-webkit-scrollbar-track,
-#eco-panel-right::-webkit-scrollbar-track { background: transparent; }
-#eco-panel-left::-webkit-scrollbar-thumb,
-#eco-panel-right::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.12); border-radius: 4px; }
-
-.eco-header {
+.eco-bar-header {
     display: flex;
     align-items: center;
-    gap: 10px;
-    margin-bottom: 12px;
-    padding-bottom: 10px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    gap: 9px;
+    margin-bottom: 9px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border-subtle);
+}
+
+.eco-bar-title {
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    flex: 1;
 }
 
 .eco-dot {
-    width: 10px;
-    height: 10px;
+    width: 9px;
+    height: 9px;
     border-radius: 50%;
-    background: #4ade80;
-    box-shadow: 0 0 0 0 rgba(74, 222, 128, 0.7);
+    background: var(--mia-terracotta-light);
+    box-shadow: 0 0 0 0 var(--accent-glow);
     animation: ecoPulse 1.8s ease-in-out infinite;
     flex-shrink: 0;
 }
 
 .eco-dot.eco-dot-error {
-    background: #f87171;
-    box-shadow: 0 0 0 0 rgba(248, 113, 113, 0.7);
-    animation: ecoPulseError 1.8s ease-in-out infinite;
+    background: var(--text-muted);
+    box-shadow: none;
+    animation: none;
+    opacity: 0.5;
 }
 
 @keyframes ecoPulse {
-    0%   { box-shadow: 0 0 0 0 rgba(74, 222, 128, 0.6); }
-    70%  { box-shadow: 0 0 0 10px rgba(74, 222, 128, 0); }
-    100% { box-shadow: 0 0 0 0 rgba(74, 222, 128, 0); }
+    0%   { box-shadow: 0 0 0 0 rgba(181, 96, 90, 0.6); }
+    70%  { box-shadow: 0 0 0 8px rgba(181, 96, 90, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(181, 96, 90, 0); }
 }
 
-@keyframes ecoPulseError {
-    0%   { box-shadow: 0 0 0 0 rgba(248, 113, 113, 0.6); }
-    70%  { box-shadow: 0 0 0 10px rgba(248, 113, 113, 0); }
-    100% { box-shadow: 0 0 0 0 rgba(248, 113, 113, 0); }
-}
-
-.eco-title {
-    font-size: 0.85rem;
-    font-weight: 700;
-    letter-spacing: 0.3px;
-    color: var(--text-primary);
-    line-height: 1.2;
-}
-
-.eco-subtitle {
-    font-size: 0.68rem;
+.eco-info-btn {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    border: 1px solid var(--border-subtle);
+    background: transparent;
     color: var(--text-muted);
-    margin-top: 2px;
-    line-height: 1.2;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 0.62rem;
+    font-weight: 700;
+    font-style: italic;
+    cursor: help;
+    padding: 0;
+    line-height: 1;
+    transition: var(--transition-fast);
 }
 
-.eco-grid {
+.eco-info-btn:hover {
+    color: var(--mia-terracotta-light);
+    border-color: var(--border-active);
+    background: rgba(181, 96, 90, 0.08);
+}
+
+.eco-bar-grid {
     display: grid;
+    grid-template-columns: repeat(4, 1fr);
     gap: 8px;
 }
 
-.eco-grid-col2 {
-    grid-template-columns: 1fr 1fr;
-}
-
-.eco-card {
-    background: rgba(255, 255, 255, 0.04);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-left: 3px solid var(--mia-terracotta);
+.eco-tile {
+    padding: 7px 10px;
+    background: rgba(15, 35, 60, 0.45);
+    border: 1px solid var(--border-subtle);
     border-radius: 10px;
-    padding: 9px 10px;
-    transition: background 0.2s ease, transform 0.2s ease;
+    border-left: 2px solid var(--mia-terracotta);
+    transition: var(--transition-fast);
 }
 
-.eco-card:hover {
-    background: rgba(255, 255, 255, 0.07);
-    transform: translateY(-1px);
+.eco-tile:hover {
+    background: rgba(20, 45, 75, 0.65);
+    border-color: rgba(181, 96, 90, 0.35);
 }
 
-.eco-card-co2      { border-left-color: #4ade80; }
-.eco-card-energy   { border-left-color: #60a5fa; }
-.eco-card-power    { border-left-color: #fb923c; }
-.eco-card-duration { border-left-color: #c084fc; }
+/* Alternance terracotta / navy pour rester 100% palette MIA */
+.eco-tile-co2      { border-left-color: var(--mia-terracotta); }
+.eco-tile-energy   { border-left-color: var(--mia-navy-light); }
+.eco-tile-power    { border-left-color: var(--mia-terracotta); }
+.eco-tile-duration { border-left-color: var(--mia-navy-light); }
 
-.eco-card-label {
+.eco-tile-label {
     font-size: 0.62rem;
     text-transform: uppercase;
     letter-spacing: 0.6px;
@@ -891,75 +887,49 @@ h1, h3, h4 {
     line-height: 1.2;
 }
 
-.eco-card-value {
-    font-size: 1.05rem;
+.eco-tile-value {
+    font-size: 1rem;
     font-weight: 700;
     color: var(--text-primary);
-    margin-top: 4px;
-    line-height: 1.1;
+    margin-top: 3px;
+    line-height: 1.15;
     font-variant-numeric: tabular-nums;
 }
 
-.eco-card-equiv {
-    font-size: 0.66rem;
+.eco-tile-equiv {
+    font-size: 0.62rem;
     color: var(--text-secondary);
-    margin-top: 5px;
+    margin-top: 3px;
     line-height: 1.25;
     font-style: italic;
+    opacity: 0.85;
 }
 
-.eco-help {
-    margin-top: 11px;
-    padding: 9px 10px;
-    background: rgba(96, 165, 250, 0.08);
-    border: 1px solid rgba(96, 165, 250, 0.18);
-    border-radius: 8px;
-    font-size: 0.7rem;
-    line-height: 1.4;
-    color: var(--text-secondary);
-}
-
-.eco-help strong {
-    color: var(--text-primary);
-    font-weight: 600;
-}
-
-.eco-help em {
-    font-style: normal;
-    font-weight: 600;
-    color: #93c5fd;
-}
-
-/* -------- Responsive des bandeaux éco -------- */
-@media (max-width: 1500px) {
-    #eco-panel-left,
-    #eco-panel-right { width: 270px; }
-    .eco-card-value  { font-size: 0.98rem; }
-}
-
-@media (max-width: 1300px) {
-    #eco-panel-left,
-    #eco-panel-right { width: 230px; padding: 10px 11px 9px; }
-    .eco-grid        { gap: 6px; }
-    .eco-card        { padding: 7px 8px; }
-    .eco-card-value  { font-size: 0.92rem; }
-}
-
-/* Sur tablette/mobile, les panneaux passent en flux dans le layout */
-@media (max-width: 1100px) {
-    #eco-panel-left,
-    #eco-panel-right {
-        position: relative;
-        top: auto;
-        left: auto;
-        right: auto;
-        width: 100%;
-        max-width: 700px;
-        margin: 12px auto 0;
-    }
-    .eco-grid-col2 { grid-template-columns: repeat(4, 1fr); }
+/* -------- Responsive de la barre éco -------- */
+@media (max-width: 900px) {
+    .eco-bar-grid { grid-template-columns: repeat(2, 1fr); }
+    .eco-tile-value { font-size: 0.92rem; }
 }
 
 @media (max-width: 768px) {
-    .eco-grid-col2 { grid-template-columns: 1fr 1fr; }
+    #eco-bar { padding: 8px 10px; margin-top: 10px; }
+    .eco-bar-header { margin-bottom: 7px; padding-bottom: 6px; }
+    .eco-bar-title { font-size: 0.65rem; letter-spacing: 1px; }
+    .eco-tile { padding: 6px 8px; }
+    .eco-tile-value { font-size: 0.88rem; }
+}
+
+@media (max-height: 800px) {
+    #eco-bar { margin-top: 10px; padding: 8px 12px; }
+    .eco-bar-header { margin-bottom: 7px; padding-bottom: 6px; }
+    .eco-tile { padding: 6px 9px; }
+    .eco-tile-value { font-size: 0.92rem; }
+}
+
+@media (max-height: 650px) {
+    #eco-bar { padding: 7px 10px; }
+    .eco-bar-header { margin-bottom: 5px; padding-bottom: 4px; }
+    .eco-bar-title { font-size: 0.62rem; }
+    .eco-tile-equiv { display: none; }
+    .eco-tile { padding: 5px 8px; }
 }
